@@ -1,0 +1,12 @@
+.promo__logo {
+  height: 320px;
+  width: 320px;
+
+  position: absolute;
+  top: calc(50% + 17px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  fill: #fff;
+  opacity: 0.2;
+}
