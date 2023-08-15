@@ -4,11 +4,17 @@
   --accent-color: #ff6838;
   --second-accent-color: #2be080;
 
+  --main-text-color: #000;
+  --secondary-text-color: #a0a0a0;
+
+  --font-size-l: 14px;
   --font-size-s: 13px;
 }
 
 .App {
   min-height: 100vh;
   min-height: 100dvh;
+
+  color: var(--main-text-color);
   font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
