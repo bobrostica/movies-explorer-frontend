@@ -20,7 +20,7 @@
   margin: 0;
 
   color: #fff;
-  font-size: 50px;
+  font-size: var(--font-size-large);
   font-weight: 400;
   line-height: 1.16;
   letter-spacing: -2px;
