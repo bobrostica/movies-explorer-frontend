@@ -1,0 +1,29 @@
+.nav-bar {
+  min-height: 66px;
+  padding: 23px 0 24px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--secondary-landing-bg-color);
+}
+
+.nav-bar__list {
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  gap: 40px;
+
+  list-style-type: none;
+}
+
+.nav-bar__link {
+  color: #000;
+  font-size: var(--font-size-s);
+  font-weight: 500;
+  line-height: 1.23;
+  text-underline-offset: 3px;
+}
