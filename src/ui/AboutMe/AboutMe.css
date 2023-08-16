@@ -1,0 +1,64 @@
+.student-section__container {
+  padding-top: 66px;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.student-section__description {
+  max-width: 600px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.student-section__title {
+  margin: 0 0 18px;
+
+  font-size: var(--font-size-large);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -2px;
+}
+
+.student-section__subtitle {
+  margin: 0 0 26px;
+
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.11;
+}
+
+.student-section__text {
+  margin: 0;
+
+  flex-grow: 1;
+
+  font-size: var(--font-size-l);
+  line-height: 1.57;
+}
+
+.student-section__github-link {
+  font-size: var(--font-size-l);
+  font-weight: 500;
+  text-decoration: none;
+
+  color: var(--main-text-color);
+}
+
+.student-section__github-link:hover {
+  opacity: var(--link-hover-opacity);
+}
+
+.student-section__photo {
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+
+  display: block;
+
+  object-fit: cover;
+}

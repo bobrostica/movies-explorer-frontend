@@ -3,9 +3,9 @@ import React from 'react';
 import './Techs.css';
 import MainSection from '../MainSection/MainSection';
 
-const Techs = () => (
+const Techs = (isSecondaryLayoutScheme) => (
   <MainSection
-    isSecondaryLayoutScheme
+    isSecondaryLayoutScheme={isSecondaryLayoutScheme}
     className="techs-section"
     title="Технологии"
   >
