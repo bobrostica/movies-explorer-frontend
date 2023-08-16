@@ -1,12 +1,12 @@
+.about-section {
+  padding-top: 110px;
+  padding-bottom: 97px;
+}
+
 /*  Steps  */
 .about-section__steps-list {
-  margin: 0;
   padding: 71px 0 0;
-
-  display: flex;
   gap: 50px;
-
-  list-style-type: none;
 }
 
 .about-section__step-subtitle {
@@ -29,12 +29,7 @@
 /*  Diagram  */
 .about-section__line-diagram {
   width: 100%;
-  margin: 0;
   padding: 111px 0 0;
-
-  display: flex;
-
-  list-style-type: none;
 }
 
 .about-section___diagram-item:first-child {

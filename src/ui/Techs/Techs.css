@@ -1,3 +1,10 @@
+.techs-section {
+  padding-top: 100px;
+  padding-bottom: 100px;
+
+  background: var(--secondary-landing-bg-color);
+}
+
 .techs-section__title {
   margin: 0 0 26px;
   padding-top: 90px;
@@ -19,29 +26,6 @@
   letter-spacing: -0.56px;
   text-align: center;
 }
-
-/* .techs-section__list {
-  margin: 0;
-  padding: 0;
-
-  display: grid;
-  grid-auto-columns: minmax(min-content, max-content);
-  grid-auto-flow: column;
-  gap: 10px;
-
-  list-style-type: none;
-}
-
-.techs-section__list-item {
-  min-height: 60px;
-  min-width: 90px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: #e8e8e8;
-} */
 
 .techs-section__list {
   max-width: 690px;

@@ -3,16 +3,12 @@ import React from 'react';
 import './AboutMe.css';
 import MainSection from '../MainSection/MainSection';
 import studentImage from '../../images/student.jpg';
-import Portfolio from '../Portfolio/Portfolio';
 import TextLink from '../TextLink/TextLink';
+import SectionTitle from '../SectionTitle/SectionTitle';
 
-const AboutMe = ({ isSecondaryLayoutScheme, githubLink }) => (
-  <MainSection
-    idName="student"
-    className="student-section"
-    title="Студент"
-    isSecondaryLayoutScheme={isSecondaryLayoutScheme}
-  >
+const AboutMe = ({ githubLink }) => (
+  <MainSection idName="student" className="student-section">
+    <SectionTitle>Студент</SectionTitle>
     <div className="student-section__container">
       <div className="student-section__description">
         <h3 className="student-section__title">Иннокентий</h3>
@@ -40,7 +36,6 @@ const AboutMe = ({ isSecondaryLayoutScheme, githubLink }) => (
         />
       </div>
     </div>
-    <Portfolio />
   </MainSection>
 );
 

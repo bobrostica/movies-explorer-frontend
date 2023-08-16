@@ -2,14 +2,11 @@ import React from 'react';
 
 import './Techs.css';
 import MainSection from '../MainSection/MainSection';
+import SectionTitle from '../SectionTitle/SectionTitle';
 
-const Techs = ({ isSecondaryLayoutScheme }) => (
-  <MainSection
-    idName="techs"
-    isSecondaryLayoutScheme={isSecondaryLayoutScheme}
-    className="techs-section"
-    title="Технологии"
-  >
+const Techs = () => (
+  <MainSection idName="techs" className="techs-section">
+    <SectionTitle>Технологии</SectionTitle>
     <p className="techs-section__title">7 технологий</p>
     <p className="techs-section__subtitle">
       На курсе веб-разработки мы освоили технологии, которые применили в

@@ -1,0 +1,39 @@
+.footer {
+  padding-top: 80px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+
+  background: #fafafa;
+}
+
+.footer__title {
+  margin: 0 0 20px;
+  padding-bottom: 21px;
+  border-bottom: 1px solid #e8e8e8;
+
+  color: var(--secondary-text-color);
+  font-size: var(--font-size-s);
+  font-weight: 400;
+  text-align: center;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__copyright {
+  margin: 0;
+
+  font-size: var(--font-size-s);
+}
+
+.footer__nav-list {
+  gap: 20px;
+}
+
+.student-section__portfolio-link {
+  font-size: var(--font-size-s);
+  text-decoration: none;
+}

@@ -2,10 +2,11 @@ import React from 'react';
 
 import './NavBar.css';
 import TextLink from '../TextLink/TextLink';
+import FlexList from '../FlexList/FlexList';
 
 const NavBar = () => (
   <section className="nav-bar">
-    <ul className="nav-bar__list">
+    <FlexList className="nav-bar__list">
       <li>
         <TextLink href="#about" className="nav-bar__link">
           О проекте
@@ -21,7 +22,7 @@ const NavBar = () => (
           Студент
         </TextLink>
       </li>
-    </ul>
+    </FlexList>
   </section>
 );
 

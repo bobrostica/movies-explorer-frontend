@@ -7,6 +7,7 @@ import NavBar from '../../ui/NavBar/NavBar';
 import AboutProject from '../../ui/AboutProject/AboutProject';
 import Techs from '../../ui/Techs/Techs';
 import AboutMe from '../../ui/AboutMe/AboutMe';
+import Portfolio from '../../ui/Portfolio/Portfolio';
 
 const Main = () => (
   <>
@@ -14,8 +15,9 @@ const Main = () => (
     <Promo />
     <NavBar />
     <AboutProject />
-    <Techs isSecondaryLayoutScheme />
+    <Techs />
     <AboutMe githubLink={GITHUB_LINK} />
+    <Portfolio />
   </>
 );
 

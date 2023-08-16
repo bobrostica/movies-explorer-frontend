@@ -2,15 +2,13 @@ import React from 'react';
 
 import './AboutProject.css';
 import MainSection from '../MainSection/MainSection';
+import SectionTitle from '../SectionTitle/SectionTitle';
+import FlexList from '../FlexList/FlexList';
 
-const AboutProject = ({ isSecondaryLayoutScheme }) => (
-  <MainSection
-    idName="about"
-    className="about-section"
-    title="О проекте"
-    isSecondaryLayoutScheme={isSecondaryLayoutScheme}
-  >
-    <ul className="about-section__steps-list">
+const AboutProject = () => (
+  <MainSection idName="about" className="about-section" title="О проекте">
+    <SectionTitle>О проекте</SectionTitle>
+    <FlexList className="about-section__steps-list">
       <li>
         <h3 className="about-section__step-subtitle">
           Дипломный проект включал 5 этапов
@@ -29,8 +27,8 @@ const AboutProject = ({ isSecondaryLayoutScheme }) => (
           соблюдать, чтобы успешно защититься.
         </p>
       </li>
-    </ul>
-    <ul className="about-section__line-diagram">
+    </FlexList>
+    <FlexList className="about-section__line-diagram">
       <li className="about-section___diagram-item">
         <p className="about-section___diagram-title about-section___diagram-title_accented">
           1 неделя
@@ -41,7 +39,7 @@ const AboutProject = ({ isSecondaryLayoutScheme }) => (
         <p className="about-section___diagram-title">4 недели</p>
         <p className="about-section___diagram-description">Front-end</p>
       </li>
-    </ul>
+    </FlexList>
   </MainSection>
 );
 

@@ -1,50 +1,52 @@
 import React from 'react';
 
 import './Portfolio.css';
+import MainSection from '../MainSection/MainSection';
 import TextLink from '../TextLink/TextLink';
 import LinkArrow from '../LinkArrow/LinkArrow';
+import FlexList from '../FlexList/FlexList';
 
 const Portfolio = () => (
-  <div className="student-section__portfolio">
-    <h3 className="student-section__portfolio-title">Портфолио</h3>
-    <ul className="student-section__portfolio-list">
-      <li className="student-section__list-item">
+  <MainSection idName="student" className="portfolio-section">
+    <h3 className="portfolio-section__title">Портфолио</h3>
+    <FlexList className="portfolio-section__links-list">
+      <li className="portfolio-section__list-item">
         <TextLink
           href="https://github.com/sergasent/how-to-learn"
-          className="student-section__portfolio-link"
+          className="portfolio-section__link"
           target="_blank"
           rel="noreferrer"
         >
-          <p className="student-section__link-text">Статичный сайт</p>
-          <LinkArrow className="student-section__link-symbol" />
+          <p className="portfolio-section__link-text">Статичный сайт</p>
+          <LinkArrow className="portfolio-section__link-symbol" />
         </TextLink>
       </li>
-      <li className="student-section__list-item">
+      <li className="portfolio-section__list-item">
         <TextLink
           href="https://github.com/sergasent/russian-travel"
-          className="student-section__portfolio-link"
+          className="portfolio-section__link"
           target="_blank"
           rel="noreferrer"
         >
-          <p className="student-section__link-text">Адаптивный сайт</p>
-          <LinkArrow className="student-section__link-symbol" />
+          <p className="portfolio-section__link-text">Адаптивный сайт</p>
+          <LinkArrow className="portfolio-section__link-symbol" />
         </TextLink>
       </li>
-      <li className="student-section__list-item">
+      <li className="portfolio-section__list-item">
         <TextLink
           href="https://github.com/sergasent/mesto-react"
-          className="student-section__portfolio-link"
+          className="portfolio-section__link"
           target="_blank"
           rel="noreferrer"
         >
-          <p className="student-section__link-text">
+          <p className="portfolio-section__link-text">
             Одностраничное приложение
           </p>
-          <LinkArrow className="student-section__link-symbol" />
+          <LinkArrow className="portfolio-section__link-symbol" />
         </TextLink>
       </li>
-    </ul>
-  </div>
+    </FlexList>
+  </MainSection>
 );
 
 export default Portfolio;
