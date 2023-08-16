@@ -21,7 +21,6 @@
 }
 
 .nav-bar__link {
-  color: #000;
   font-size: var(--font-size-s);
   font-weight: 500;
   line-height: 1.23;

@@ -7,8 +7,10 @@ const MainSection = ({
   children,
   title,
   className,
+  idName,
 }) => (
   <section
+    id={idName}
     className={`main-section ${
       isSecondaryLayoutScheme
         ? 'main-section_scheme_secondary'

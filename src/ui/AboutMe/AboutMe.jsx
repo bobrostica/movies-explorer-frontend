@@ -8,6 +8,7 @@ import TextLink from '../TextLink/TextLink';
 
 const AboutMe = ({ isSecondaryLayoutScheme, githubLink }) => (
   <MainSection
+    idName="student"
     className="student-section"
     title="Студент"
     isSecondaryLayoutScheme={isSecondaryLayoutScheme}

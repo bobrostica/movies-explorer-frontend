@@ -1,24 +1,25 @@
 import React from 'react';
 
 import './NavBar.css';
+import TextLink from '../TextLink/TextLink';
 
 const NavBar = () => (
   <section className="nav-bar">
     <ul className="nav-bar__list">
       <li>
-        <a href="#about" className="nav-bar__link">
+        <TextLink href="#about" className="nav-bar__link">
           О проекте
-        </a>
+        </TextLink>
       </li>
       <li>
-        <a href="#techs" className="nav-bar__link">
+        <TextLink href="#techs" className="nav-bar__link">
           Технологии
-        </a>
+        </TextLink>
       </li>
       <li>
-        <a href="#student" className="nav-bar__link">
+        <TextLink href="#student" className="nav-bar__link">
           Студент
-        </a>
+        </TextLink>
       </li>
     </ul>
   </section>

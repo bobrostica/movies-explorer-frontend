@@ -5,6 +5,7 @@ import MainSection from '../MainSection/MainSection';
 
 const AboutProject = ({ isSecondaryLayoutScheme }) => (
   <MainSection
+    idName="about"
     className="about-section"
     title="О проекте"
     isSecondaryLayoutScheme={isSecondaryLayoutScheme}
