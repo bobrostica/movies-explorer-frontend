@@ -1,9 +1,18 @@
 .footer {
-  padding-top: 80px;
-  padding-bottom: 20px;
+  padding: 80px 70px 20px;
   box-sizing: border-box;
 
+  display: flex;
+
   background: #fafafa;
+}
+
+.footer__content {
+  width: 100%;
+  max-width: 1140px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .footer__title {
@@ -36,4 +45,15 @@
 .student-section__portfolio-link {
   font-size: var(--font-size-s);
   text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 44px 30px 20px;
+    box-sizing: border-box;
+
+    display: flex;
+
+    background: #fff;
+  }
 }
