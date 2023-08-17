@@ -1,6 +1,6 @@
 .promo {
   min-height: 598px;
-  padding-top: 34px;
+  padding: 34px 10px 0;
   box-sizing: border-box;
 
   position: relative;
@@ -12,6 +12,9 @@
 }
 
 .promo__logo {
+  height: 320px;
+  width: 320px;
+
   position: absolute;
   top: calc(50% + 17px);
   left: 50%;
@@ -42,5 +45,26 @@
 
   .promo__logo {
     top: calc(50% + 29px);
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .promo {
+    min-height: 644px;
+    padding-top: 38px;
+  }
+
+  .promo__logo {
+    height: 248px;
+    width: 248px;
+
+    top: calc(50% + 18px);
+  }
+
+  .promo__title {
+    font-size: 31px;
+    line-height: 1.25;
+    letter-spacing: -1.24px;
+    text-align: center;
   }
 }
