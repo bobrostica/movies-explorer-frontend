@@ -95,3 +95,57 @@
     flex-grow: 9;
   }
 }
+
+@media screen and (max-width: 640px) {
+  .about-section {
+    padding-top: 71px;
+    padding-bottom: 69px;
+  }
+
+  .about-section__steps-list {
+    padding-top: 61px;
+
+    flex-direction: column;
+    gap: 57px;
+  }
+
+  .about-section__step-subtitle {
+    padding-bottom: 16px;
+
+    font-size: 18px;
+    line-height: 1.21;
+    letter-spacing: -0.72px;
+  }
+
+  .about-section__step-text {
+    font-size: 11px;
+    line-height: 1.454;
+  }
+
+  /*  Diagram  */
+  .about-section__line-diagram {
+    padding-top: 59px;
+  }
+
+  .about-section___diagram-title {
+    min-height: 35px;
+    margin: 0;
+    padding: 9px 14px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 11px;
+  }
+
+  .about-section___diagram-description {
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .about-section___diagram-item:last-child {
+    flex-grow: 4;
+  }
+}

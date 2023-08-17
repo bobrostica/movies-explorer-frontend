@@ -19,3 +19,10 @@
     padding-right: 50px;
   }
 }
+
+@media screen and (max-width: 640px) {
+  .main-section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
