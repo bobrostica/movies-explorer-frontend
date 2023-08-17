@@ -44,3 +44,16 @@
   height: 17px;
   margin: 0 6px;
 }
+
+@media screen and (max-width: 768px) {
+  .portfolio-section {
+    padding-top: 40px;
+    padding-bottom: 104px;
+  }
+
+  .portfolio-section__link-text {
+    font-size: 28px;
+    line-height: 1.78;
+    letter-spacing: -1.12px;
+  }
+}

@@ -9,6 +9,7 @@
 
   display: flex;
   justify-content: space-between;
+  gap: 49px;
 }
 
 .student-section__description {
@@ -65,4 +66,50 @@
   display: block;
 
   object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+  .student-section {
+    padding-top: 89px;
+    padding-bottom: 50px;
+  }
+
+  .student-section__title {
+    margin-bottom: 16px;
+
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: -1.6px;
+  }
+
+  .student-section__subtitle {
+    margin-bottom: 20px;
+
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .student-section__text {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .student-section__photo {
+    width: 255px;
+    height: 307px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .student-section__container {
+    flex-direction: column;
+  }
+
+  .student-section__photo {
+    width: 292px;
+    height: 352px;
+
+    align-self: center;
+    order: -1;
+  }
 }

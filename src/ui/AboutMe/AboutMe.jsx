@@ -28,13 +28,11 @@ const AboutMe = ({ githubLink }) => (
           Github
         </TextLink>
       </div>
-      <div>
-        <img
-          className="student-section__photo"
-          src={studentImage}
-          alt="Моё фото"
-        />
-      </div>
+      <img
+        className="student-section__photo"
+        src={studentImage}
+        alt="Моё фото"
+      />
     </div>
   </MainSection>
 );
