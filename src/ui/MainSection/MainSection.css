@@ -12,3 +12,10 @@
   width: 100%;
   max-width: 1140px;
 }
+
+@media screen and (max-width: 768px) {
+  .main-section {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}

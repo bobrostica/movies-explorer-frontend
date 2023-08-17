@@ -33,11 +33,11 @@
 }
 
 .about-section___diagram-item:first-child {
-  min-width: 228px;
+  flex-grow: 1;
 }
 
 .about-section___diagram-item:last-child {
-  flex-grow: 1;
+  flex-grow: 6;
 }
 
 .about-section___diagram-title {
@@ -66,4 +66,32 @@
   color: var(--secondary-text-color);
   font-size: var(--font-size-l);
   text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .about-section {
+    padding-top: 90px;
+    padding-bottom: 77px;
+  }
+
+  .about-section__steps-list {
+    gap: 36px;
+  }
+
+  .about-section__step-subtitle {
+    padding-bottom: 23px;
+  }
+
+  .about-section__step-text {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .about-section__line-diagram {
+    padding: 93px 0 0;
+  }
+
+  .about-section___diagram-item:last-child {
+    flex-grow: 9;
+  }
 }
