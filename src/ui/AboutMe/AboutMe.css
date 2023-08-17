@@ -101,8 +101,30 @@
 }
 
 @media screen and (max-width: 640px) {
+  .student-section {
+    padding-top: 71px;
+  }
+
   .student-section__container {
+    padding-top: 60px;
+
     flex-direction: column;
+    gap: 40px;
+  }
+
+  .student-section__title {
+    margin-bottom: 20px;
+
+    font-size: 30px;
+    line-height: normal;
+    letter-spacing: -1.2px;
+  }
+
+  .student-section__text {
+    margin-bottom: 40px;
+
+    font-size: 11px;
+    line-height: 1.45;
   }
 
   .student-section__photo {

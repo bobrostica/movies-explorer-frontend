@@ -7,7 +7,7 @@ import TextLink from '../TextLink/TextLink';
 import SectionTitle from '../SectionTitle/SectionTitle';
 
 const AboutMe = ({ githubLink }) => (
-  <MainSection idName="student" className="student-section">
+  <MainSection idName="student" className="student-section" paddingSize="m">
     <SectionTitle>Студент</SectionTitle>
     <div className="student-section__container">
       <div className="student-section__description">
@@ -16,8 +16,9 @@ const AboutMe = ({ githubLink }) => (
         <p className="student-section__text">
           Я родился и живу в Мытищах, закончил факультет педагогики ВОБЛГУ. У
           меня есть жена, дочь, дядя, тётя и зелёный попугай. Я люблю слушать
-          музыку и смотреть фильмы. Недавно начал кодить и теперь считаю, что
-          уже готов к высокой зарплате.
+          музыку и смотреть фильмы, кататься на самокате и забираться в горы. С
+          2015 года работал в ПАО &quot;Сухой&quot;. Недавно начал кодить и
+          теперь считаю, что уже готов к высокой зарплате.
         </p>
         <TextLink
           className="student-section__github-link"

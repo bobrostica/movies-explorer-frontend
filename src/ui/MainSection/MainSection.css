@@ -1,11 +1,30 @@
+:root {
+  --padding-size-l: 70px;
+  --padding-size-m: 70px;
+  --padding-size-s: 70px;
+}
+
 .main-section {
-  padding-left: 70px;
-  padding-right: 70px;
   box-sizing: border-box;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.main-section_padding-size_l {
+  padding-left: var(--padding-size-l);
+  padding-right: var(--padding-size-l);
+}
+
+.main-section_padding-size_m {
+  padding-left: var(--padding-size-m);
+  padding-right: var(--padding-size-m);
+}
+
+.main-section_padding-size_s {
+  padding-left: var(--padding-size-s);
+  padding-right: var(--padding-size-s);
 }
 
 .main-section__container {
@@ -14,15 +33,15 @@
 }
 
 @media screen and (max-width: 768px) {
-  .main-section {
-    padding-left: 50px;
-    padding-right: 50px;
+  :root {
+    --padding-size-l: 50px;
   }
 }
 
 @media screen and (max-width: 640px) {
-  .main-section {
-    padding-left: 18px;
-    padding-right: 18px;
+  :root {
+    --padding-size-l: 18px;
+    --padding-size-m: 14px;
+    --padding-size-s: 10px;
   }
 }
