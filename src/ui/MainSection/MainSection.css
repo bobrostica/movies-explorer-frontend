@@ -35,6 +35,8 @@
 @media screen and (max-width: 768px) {
   :root {
     --padding-size-l: 50px;
+    --padding-size-m: 50px;
+    --padding-size-s: 30px;
   }
 }
 
