@@ -11,6 +11,13 @@
   background: #465dff;
 }
 
+.promo__logo {
+  position: absolute;
+  top: calc(50% + 17px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .promo__content {
   z-index: 1;
 }
@@ -25,4 +32,15 @@
   line-height: 1.16;
   letter-spacing: -2px;
   text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .promo {
+    min-height: 858px;
+    padding-top: 58px;
+  }
+
+  .promo__logo {
+    top: calc(50% + 29px);
+  }
 }

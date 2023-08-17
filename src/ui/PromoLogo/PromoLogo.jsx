@@ -2,9 +2,9 @@ import React from 'react';
 
 import './PromoLogo.css';
 
-const PromoLogo = () => (
+const PromoLogo = ({ className }) => (
   <svg
-    className="promo__logo"
+    className={`promo-logo ${className || ''}`}
     xmlns="http://www.w3.org/2000/svg"
     width="320"
     height="320"

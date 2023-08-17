@@ -5,7 +5,7 @@ import PromoLogo from '../PromoLogo/PromoLogo';
 
 const Promo = () => (
   <section className="promo">
-    <PromoLogo />
+    <PromoLogo className="promo__logo" />
     <div className="promo__content">
       <h1 className="promo__title">
         Учебный проект студента факультета Веб-разработки.
