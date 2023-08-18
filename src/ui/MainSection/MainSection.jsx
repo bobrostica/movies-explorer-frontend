@@ -4,7 +4,7 @@ import './MainSection.css';
 
 const MainSection = ({ children, className, idName, paddingSize = 'l' }) => (
   <section
-    id={idName}
+    id={idName || ''}
     className={`main-section ${
       paddingSize ? `main-section_padding-size_${paddingSize}` : ''
     } ${className || ''}`}

@@ -1,0 +1,24 @@
+.search-button {
+  width: 80px;
+  height: 34px;
+  border: 0;
+  border-radius: 100vmax;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #ff6838;
+
+  transition: opacity 0.2s ease;
+}
+
+.search-button:hover {
+  opacity: 0.8;
+}
+
+.search-button__image {
+  width: 22px;
+  height: 22px;
+}

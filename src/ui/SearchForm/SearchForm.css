@@ -1,0 +1,17 @@
+.search-form {
+  padding-top: 132px;
+  box-sizing: border-box;
+}
+
+.search-form__form {
+  padding-bottom: 69px;
+  border-bottom: 1px solid #e8e8e8;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.search-form__switch-toggle {
+  align-self: center;
+}
