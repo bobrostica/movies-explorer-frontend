@@ -7,7 +7,7 @@ import LinkArrow from '../LinkArrow/LinkArrow';
 import FlexList from '../FlexList/FlexList';
 
 const Portfolio = () => (
-  <MainSection idName="student" className="portfolio-section" paddingSize="m">
+  <MainSection idName="portfolio" className="portfolio-section" paddingSize="m">
     <h3 className="portfolio-section__title">Портфолио</h3>
     <FlexList className="portfolio-section__links-list">
       <li className="portfolio-section__list-item">
