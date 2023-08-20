@@ -2,6 +2,7 @@
   --padding-size-l: 70px;
   --padding-size-m: 70px;
   --padding-size-s: 70px;
+  --padding-size-xs: 70px;
 }
 
 .main-section {
@@ -27,6 +28,11 @@
   padding-right: var(--padding-size-s);
 }
 
+.main-section_padding-size_xs {
+  padding-left: var(--padding-size-xs);
+  padding-right: var(--padding-size-xs);
+}
+
 .main-section__container {
   width: 100%;
   max-width: 1140px;
@@ -37,6 +43,7 @@
     --padding-size-l: 50px;
     --padding-size-m: 50px;
     --padding-size-s: 30px;
+    --padding-size-xs: 30px;
   }
 }
 
@@ -44,6 +51,7 @@
   :root {
     --padding-size-l: 18px;
     --padding-size-m: 14px;
-    --padding-size-s: 10px;
+    --padding-size-s: 14px;
+    --padding-size-xs: 10px;
   }
 }

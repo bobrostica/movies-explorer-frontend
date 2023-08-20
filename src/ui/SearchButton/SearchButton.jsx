@@ -2,8 +2,12 @@ import React from 'react';
 
 import './SearchButton.css';
 
-const SearchButton = ({ isValid }) => (
-  <button className="search-button" type="submit" disabled={isValid}>
+const SearchButton = ({ isValid, className }) => (
+  <button
+    className={`search-button ${className || ''}`}
+    type="submit"
+    disabled={isValid}
+  >
     <svg
       className="search-button__image"
       xmlns="http://www.w3.org/2000/svg"

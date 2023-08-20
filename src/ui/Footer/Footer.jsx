@@ -6,7 +6,7 @@ import FlexList from '../FlexList/FlexList';
 import MainSection from '../MainSection/MainSection';
 
 const Footer = ({ githubLink }) => (
-  <MainSection className="footer" paddingSize="s">
+  <MainSection className="footer" paddingSize="xs">
     <h2 className="footer__title">
       Учебный проект Яндекс.Практикум х BeatFilm.
     </h2>

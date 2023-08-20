@@ -8,7 +8,10 @@ import SwitchToggle from '../SwitchToggle/SwitchToggle';
 const SearchForm = () => (
   <MainSection className="search-form" paddingSize="s">
     <form name="search-form" className="search-form__form">
-      <SearcherField placeholder="Фильм" />
+      <SearcherField
+        className="search-form__searcher-fieldset"
+        placeholder="Фильм"
+      />
       <SwitchToggle
         className="search-form__switch-toggle"
         labelText="Короткометражки"

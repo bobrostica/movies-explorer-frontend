@@ -58,3 +58,12 @@
   background: #fff;
   transform: translateX(100%);
 }
+
+@media screen and (max-width: 640px) {
+  .switch-toggle__label {
+    gap: 13px;
+
+    font-size: 11px;
+    line-height: 1.9;
+  }
+}
