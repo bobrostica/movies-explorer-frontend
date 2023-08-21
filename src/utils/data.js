@@ -127,6 +127,14 @@ const moviesData = [
     trailerLink: 'https://youtu.be/S-xjudFxgBU',
     duration: '2ч22мин',
   },
+  {
+    id: '17',
+    name: '33 слова о дизайне',
+    image:
+      'https://i.ytimg.com/vi/SvNbrvwaqlQ/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEQgRSh_MA8=&amp;rs=AOn4CLAsBTQM2coXYDZ_iBCjFkyLlo6gyQ',
+    trailerLink: 'https://youtu.be/S-xjudFxgBU',
+    duration: '2ч22мин',
+  },
 ];
 
 const savedMovies = [

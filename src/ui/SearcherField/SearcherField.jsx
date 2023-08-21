@@ -10,6 +10,7 @@ const SearcherField = ({ className, placeholder = '' }) => (
       type="text"
       name="searcher"
       placeholder={placeholder}
+      required
     />
     <SearchButton className="searcher-field__button" />
   </fieldset>

@@ -35,7 +35,7 @@
   box-sizing: border-box;
 
   display: grid;
-  grid-template-areas: 'title toggle' 'duration duration';
+  grid-template-areas: 'title control' 'duration duration';
   row-gap: 10px;
 }
 
@@ -49,10 +49,21 @@
   line-height: normal;
 }
 
-.movies-card__toggle {
-  grid-area: toggle;
+.movies-card__control {
+  grid-area: control;
 
   justify-self: end;
+
+  display: flex;
+}
+
+.movies-card__control_type_close-control {
+  opacity: 0;
+  transition: var(--opacity-transition);
+}
+
+.movies-card__link:hover .movies-card__control_type_close-control {
+  opacity: 1;
 }
 
 .movies-card__duration {

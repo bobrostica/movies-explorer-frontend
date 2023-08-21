@@ -1,9 +1,18 @@
 import React from 'react';
 
 import './MoviesCard.css';
+import createComponentByType from '../../utils/ComponentFactory';
 
-const MoviesCard = ({ movie }) => {
-  const { id, name, image, trailerLink, duration, InputComponent } = movie;
+const MoviesCard = ({ movie, controlConfig }) => {
+  const { id, name, image, trailerLink, duration } = movie;
+  const { controlType, controlText } = controlConfig;
+
+  const InputComponent = createComponentByType(controlType);
+
+  if (!InputComponent) {
+    return null;
+  }
+
   return (
     <article className="movies-card">
       <a
@@ -18,10 +27,19 @@ const MoviesCard = ({ movie }) => {
         </div>
         <div className="movies-card__description">
           <h2 className="movies-card__title">{name}</h2>
-          <InputComponent
-            id={`movie-input-${id}`}
-            className="movies-card__toggle"
-          />
+          {/* Контрол ниже помещен в обертку, чтобы не отдавать ему контроль opacity,
+           о которой он не должен знать. Иначе, если задать контролу transition на уровне
+           элемента MoviesCard, то оно сбросится на уровне CloseButton */}
+          <div
+            className={`movies-card__control ${
+              controlType ? `movies-card__control_type_${controlType}` : ''
+            }`}
+          >
+            <InputComponent
+              id={`movie-input-${id}`}
+              controlText={controlText}
+            />
+          </div>
           <p className="movies-card__duration">{duration}</p>
         </div>
       </a>

@@ -35,6 +35,10 @@
   opacity: 0.8;
 }
 
+.movies-list__plug {
+  min-height: 10px;
+}
+
 @media screen and (max-width: 768px) {
   .movies-list {
     padding-bottom: 116px;

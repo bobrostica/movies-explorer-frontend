@@ -1,14 +1,16 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
 
+import { moviesData } from '../../utils/data';
 import SearchForm from '../../ui/SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 const Movies = () => (
   <>
-    <Outlet />
     <SearchForm />
-    <MoviesCardList />
+    <MoviesCardList
+      moviesData={moviesData}
+      controlConfig={{ controlType: 'save-control', controlText: 'Сохранить' }}
+    />
   </>
 );
 

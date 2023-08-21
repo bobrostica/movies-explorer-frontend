@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MainSection from '../../ui/MainSection/MainSection';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import FancyCheckbox from '../../ui/FancyCheckbox/FancyCheckbox';
-import { moviesData } from '../../utils/data';
 import throttleThisFunc from '../../utils/utils';
 import {
   TABLET_WIDTH,
@@ -14,21 +12,26 @@ import {
 
 import './MoviesCardList.css';
 
-const MoviesCardList = () => {
+/*  Немного функционала для более удобной вёрстки */
+const MoviesCardList = ({ moviesData, controlConfig }) => {
   const [moviesToShow, setMoviesToShow] = useState([]);
+  const [shouldShowMore, setShouldShowMore] = useState(false);
 
   const updateMoviesToShow = () => {
     if (window.innerWidth <= MOBILE_WIDTH) {
       setMoviesToShow(moviesData.slice(0, MOBILE_MOVIES_COUNT));
+      setShouldShowMore(moviesData.length > MOBILE_MOVIES_COUNT);
       return;
     }
 
     if (window.innerWidth <= TABLET_WIDTH) {
       setMoviesToShow(moviesData.slice(0, TABLET_MOVIES_COUNT));
+      setShouldShowMore(moviesData.length > TABLET_MOVIES_COUNT);
       return;
     }
 
     setMoviesToShow(moviesData.slice(0, DESKTOP_MOVIES_COUNT));
+    setShouldShowMore(moviesData.length > DESKTOP_MOVIES_COUNT);
   };
 
   const throttledUpdateMoviesToShow = throttleThisFunc(
@@ -53,13 +56,17 @@ const MoviesCardList = () => {
       <ul className="movies-list__list">
         {moviesToShow?.map((movie) => (
           <li key={movie.id}>
-            <MoviesCard movie={{ ...movie, InputComponent: FancyCheckbox }} />
+            <MoviesCard movie={movie} controlConfig={controlConfig} />
           </li>
         ))}
       </ul>
-      <button className="movies-list__more-button" type="button">
-        Ещё
-      </button>
+      {shouldShowMore ? (
+        <button className="movies-list__more-button" type="button">
+          Ещё
+        </button>
+      ) : (
+        <div className="movies-list__plug" />
+      )}
     </MainSection>
   );
 };

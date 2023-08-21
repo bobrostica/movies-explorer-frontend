@@ -14,7 +14,7 @@
 
   --link-hover-opacity: 0.7;
 
-  --text-link-transition: opacity 0.2s ease;
+  --opacity-transition: opacity 0.2s ease;
 }
 
 .App {

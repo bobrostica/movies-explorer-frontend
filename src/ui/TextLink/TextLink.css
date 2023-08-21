@@ -1,6 +1,6 @@
 .text-link {
   color: var(--text-link-color);
-  transition: var(--text-link-transition);
+  transition: var(--opacity-transition);
 }
 
 .text-link:hover {
