@@ -21,6 +21,10 @@
   min-height: 100vh;
   min-height: 100dvh;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   color: var(--main-text-color);
   font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
