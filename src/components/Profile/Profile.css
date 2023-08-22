@@ -1,7 +1,7 @@
 .profile {
   width: 100%;
   max-width: 410px;
-  padding: 148px 30px 70px;
+  padding: 148px 0 70px;
   box-sizing: border-box;
   align-self: center;
 
@@ -70,10 +70,17 @@
 .profile__button {
   padding: 0;
   border: 0;
+  cursor: pointer;
 
   background: transparent;
   font-size: 13px;
   line-height: normal;
+
+  transition: var(--opacity-transition);
+}
+
+.profile__button:hover {
+  opacity: var(--link-hover-opacity);
 }
 
 .profile__button_type_logout {
@@ -100,8 +107,7 @@
   .profile {
     min-height: 100vh;
     min-height: 100dvh;
-    padding-top: 144px;
-    padding-bottom: 40px;
+    padding: 144px 30px 40px;
   }
 
   .profile__title {
