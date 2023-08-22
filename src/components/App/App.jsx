@@ -9,6 +9,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import NotFound from '../../ui/NotFound/NotFound';
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
         </Route>
         <Route path="/signin" element={<Login />} />
         <Route path="/signup" element={<Register />} />
-        <Route path="*" />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Routes>
