@@ -16,6 +16,10 @@
   --button-hover-opacity: 0.8;
 
   --opacity-transition: opacity 0.2s ease;
+
+  --padding-desktop: 70px;
+  --padding-tablet: 50px;
+  --padding-tablet-small: 30px;
 }
 
 .App {

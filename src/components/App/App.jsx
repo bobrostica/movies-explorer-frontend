@@ -10,12 +10,13 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../../ui/NotFound/NotFound';
+import HeaderLayout from '../HeaderLayout/HeaderLayout';
 
 const App = () => {
   return (
     <div className="App">
       <Routes>
-        <Route>
+        <Route element={<HeaderLayout />}>
           <Route path="/" element={<Main />} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/saved-movies" element={<SavedMovies />} />

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
 
 import { GITHUB_LINK } from '../../utils/constants';
 import Promo from '../../ui/Promo/Promo';
@@ -11,7 +10,6 @@ import Portfolio from '../../ui/Portfolio/Portfolio';
 
 const Main = () => (
   <>
-    <Outlet />
     <Promo />
     <NavBar />
     <AboutProject />
