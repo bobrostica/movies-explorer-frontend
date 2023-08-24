@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MainSection from '../../ui/MainSection/MainSection';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import Preloader from '../../ui/Preloader/Preloader';
 import {
   TABLET_WIDTH,
   MOBILE_WIDTH,
@@ -13,10 +14,9 @@ import './MoviesCardList.css';
 import { useAppState } from '../../contexts/AppStateContext';
 
 /*  Немного функционала для более удобной вёрстки */
-const MoviesCardList = ({ moviesData, controlConfig }) => {
+const MoviesCardList = ({ isLoading, moviesData, controlConfig }) => {
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [shouldShowMore, setShouldShowMore] = useState(false);
-  // const [isLoading] = useState(false);
   const [{ currentDeviceWidth }] = useAppState();
 
   const updateMoviesToShow = () => {
@@ -50,14 +50,18 @@ const MoviesCardList = ({ moviesData, controlConfig }) => {
       containerClassName="movies-list__container"
       paddingSize="xs"
     >
-      <ul className="movies-list__list">
-        {moviesToShow?.map((movie) => (
-          <li key={movie.id}>
-            <MoviesCard movie={movie} controlConfig={controlConfig} />
-          </li>
-        ))}
-      </ul>
-      {shouldShowMore ? (
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <ul className="movies-list__list">
+          {moviesToShow?.map((movie) => (
+            <li key={movie.id}>
+              <MoviesCard movie={movie} controlConfig={controlConfig} />
+            </li>
+          ))}
+        </ul>
+      )}
+      {!isLoading && shouldShowMore ? (
         <button className="movies-list__more-button" type="button">
           Ещё
         </button>
