@@ -12,11 +12,13 @@ const Header = () => {
 
   return (
     <header className="header">
-      <Logo />
-      <Navigation
-        isLoggedIn={isLoggedIn}
-        theme={isCurrentLocation ? 'dark' : null}
-      />
+      <div className="header__container">
+        <Logo />
+        <Navigation
+          isLoggedIn={isLoggedIn}
+          theme={isCurrentLocation ? 'dark' : null}
+        />
+      </div>
     </header>
   );
 };

@@ -23,6 +23,8 @@
   --padding-mobile: 18px;
   --padding-mobile-small: 14px;
   --padding-mobile-smallest: 10px;
+
+  --max-desktop-width: 1140px;
 }
 
 .app {

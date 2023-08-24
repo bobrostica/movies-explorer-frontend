@@ -10,7 +10,7 @@
 
 .main-section__container {
   width: 100%;
-  max-width: 1140px;
+  max-width: var(--max-desktop-width);
 }
 
 @media screen and (max-width: 768px) {
