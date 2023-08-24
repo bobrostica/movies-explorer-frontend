@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './Profile.css';
 import FormTitle from '../../ui/FormTitle/FormTitle';
@@ -7,6 +8,8 @@ import FormInput from '../../ui/FormInput/FormInput';
 const Profile = () => {
   const [userName] = useState('Виталий');
   const [email] = useState('pochta@yandex.ru');
+
+  const navigate = useNavigate();
 
   return (
     <section className="profile">
@@ -39,6 +42,7 @@ const Profile = () => {
       <button
         className="profile__button profile__button_type_logout"
         type="button"
+        onClick={() => navigate('/signin', { replace: true })}
       >
         Выйти из аккаунта
       </button>

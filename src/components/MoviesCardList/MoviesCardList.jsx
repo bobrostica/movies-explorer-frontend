@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MainSection from '../../ui/MainSection/MainSection';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import throttleThisFunc from '../../utils/utils';
 import {
   TABLET_WIDTH,
   MOBILE_WIDTH,
@@ -11,11 +10,14 @@ import {
 } from '../../utils/constants';
 
 import './MoviesCardList.css';
+import { useAppState } from '../../contexts/AppStateContext';
 
 /*  Немного функционала для более удобной вёрстки */
 const MoviesCardList = ({ moviesData, controlConfig }) => {
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [shouldShowMore, setShouldShowMore] = useState(false);
+  // const [isLoading] = useState(false);
+  const [{ currentDeviceWidth }] = useAppState();
 
   const updateMoviesToShow = () => {
     if (window.innerWidth <= MOBILE_WIDTH) {
@@ -34,17 +36,12 @@ const MoviesCardList = ({ moviesData, controlConfig }) => {
     setShouldShowMore(moviesData.length > DESKTOP_MOVIES_COUNT);
   };
 
-  const throttledUpdateMoviesToShow = throttleThisFunc(
-    updateMoviesToShow,
-    1000,
-  );
+  useEffect(() => {
+    updateMoviesToShow();
+  }, [currentDeviceWidth]);
 
   useEffect(() => {
     updateMoviesToShow();
-    window.addEventListener('resize', throttledUpdateMoviesToShow);
-
-    return () =>
-      window.removeEventListener('resize', throttledUpdateMoviesToShow);
   }, []);
 
   return (

@@ -10,13 +10,7 @@ const CloseButton = ({ className, controlText = 'close' }) => (
     title={controlText}
     onClick={(e) => e.preventDefault()}
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

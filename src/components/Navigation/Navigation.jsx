@@ -1,31 +1,31 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const Navigation = () => (
-  <nav className="navigation">
-    <ul className="navigation__list">
-      <li>
-        <Link to="/" className="navigation__link">
-          Главная
-        </Link>
-      </li>
-      <li>
-        <Link to="/movies" className="navigation__link">
-          Фильмы
-        </Link>
-      </li>
-      <li>
-        <Link to="/saved-movies" className="navigation__link">
-          Сохранённые фильмы
-        </Link>
-      </li>
-      <li>
-        <Link to="/profile" className="navigation__link">
-          Аккаунт
-        </Link>
-      </li>
-    </ul>
-  </nav>
-);
+import './Navigation.css';
+import LoggedNavList from '../LoggedNavList/LoggedNavList';
+import NavList from '../NavList/NavList';
+import { useAppState } from '../../contexts/AppStateContext';
+import BurgerButton from '../../ui/BurgerButton/BurgerButton';
+
+const Navigation = ({ theme }) => {
+  const [{ isLoggedIn, currentDeviceWidth }, setAppState] = useAppState();
+
+  const handleMenuOpen = () => {
+    setAppState((prev) => ({ ...prev, isMenuOpened: true }));
+  };
+
+  return (
+    <nav className="navigation">
+      {!isLoggedIn && <NavList theme={theme} />}
+      {isLoggedIn && currentDeviceWidth === 'desktop' && (
+        <LoggedNavList theme={theme} />
+      )}
+      {isLoggedIn &&
+        (currentDeviceWidth === 'tablet' ||
+          currentDeviceWidth === 'mobile') && (
+          <BurgerButton onClick={handleMenuOpen} theme={theme} />
+        )}
+    </nav>
+  );
+};
 
 export default Navigation;

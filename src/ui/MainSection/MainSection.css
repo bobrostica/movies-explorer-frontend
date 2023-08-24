@@ -1,36 +1,11 @@
-:root {
-  --padding-size-l: var(--padding-desktop);
-  --padding-size-m: var(--padding-desktop);
-  --padding-size-s: var(--padding-desktop);
-  --padding-size-xs: var(--padding-desktop);
-}
-
 .main-section {
+  padding-left: var(--padding-desktop);
+  padding-right: var(--padding-desktop);
   box-sizing: border-box;
 
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.main-section_padding-size_l {
-  padding-left: var(--padding-size-l);
-  padding-right: var(--padding-size-l);
-}
-
-.main-section_padding-size_m {
-  padding-left: var(--padding-size-m);
-  padding-right: var(--padding-size-m);
-}
-
-.main-section_padding-size_s {
-  padding-left: var(--padding-size-s);
-  padding-right: var(--padding-size-s);
-}
-
-.main-section_padding-size_xs {
-  padding-left: var(--padding-size-xs);
-  padding-right: var(--padding-size-xs);
 }
 
 .main-section__container {
@@ -39,19 +14,45 @@
 }
 
 @media screen and (max-width: 768px) {
-  :root {
-    --padding-size-l: var(--padding-tablet);
-    --padding-size-m: var(--padding-tablet);
-    --padding-size-s: var(--padding-tablet-small);
-    --padding-size-xs: var(--padding-tablet-small);
+  .main-section {
+    padding-left: var(--padding-tablet);
+    padding-right: var(--padding-tablet);
+  }
+
+  .main-section_padding-size_m {
+    padding-left: var(--padding-tablet);
+    padding-right: var(--padding-tablet);
+  }
+
+  .main-section_padding-size_s {
+    padding-left: var(--padding-tablet-small);
+    padding-right: var(--padding-tablet-small);
+  }
+
+  .main-section_padding-size_xs {
+    padding-left: var(--padding-tablet-small);
+    padding-right: var(--padding-tablet-small);
   }
 }
 
 @media screen and (max-width: 640px) {
-  :root {
-    --padding-size-l: 18px;
-    --padding-size-m: 14px;
-    --padding-size-s: 14px;
-    --padding-size-xs: 10px;
+  .main-section {
+    padding-left: var(--padding-mobile);
+    padding-right: var(--padding-mobile);
+  }
+
+  .main-section_padding-size_m {
+    padding-left: var(--padding-mobile-small);
+    padding-right: var(--padding-mobile-small);
+  }
+
+  .main-section_padding-size_s {
+    padding-left: var(--padding-mobile-small);
+    padding-right: var(--padding-mobile-small);
+  }
+
+  .main-section_padding-size_xs {
+    padding-left: var(--padding-mobile-smallest);
+    padding-right: var(--padding-mobile-smallest);
   }
 }

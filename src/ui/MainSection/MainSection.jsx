@@ -7,7 +7,7 @@ const MainSection = ({
   className,
   containerClassName,
   idName,
-  paddingSize = 'l',
+  paddingSize,
 }) => (
   <section
     id={idName || null}
