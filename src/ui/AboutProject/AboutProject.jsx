@@ -29,15 +29,15 @@ const AboutProject = () => (
       </li>
     </FlexList>
     <FlexList className="about-section__line-diagram">
-      <li className="about-section___diagram-item">
-        <p className="about-section___diagram-title about-section___diagram-title_accented">
+      <li className="about-section__diagram-item">
+        <p className="about-section__diagram-title about-section__diagram-title_accented">
           1 неделя
         </p>
-        <p className="about-section___diagram-description">Back-end</p>
+        <p className="about-section__diagram-description">Back-end</p>
       </li>
-      <li className="about-section___diagram-item">
-        <p className="about-section___diagram-title">4 недели</p>
-        <p className="about-section___diagram-description">Front-end</p>
+      <li className="about-section__diagram-item">
+        <p className="about-section__diagram-title">4 недели</p>
+        <p className="about-section__diagram-description">Front-end</p>
       </li>
     </FlexList>
   </MainSection>

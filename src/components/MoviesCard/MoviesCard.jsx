@@ -15,34 +15,38 @@ const MoviesCard = ({ movie, controlConfig }) => {
 
   return (
     <article className="movies-card">
+      {/* Контейнер используется для обрезки изображения при scale для эффекта hover */}
       <a
-        className="movies-card__link"
+        className="movies-card__image-container"
         href={trailerLink}
         target="_blank"
         rel="noreferrer"
       >
-        {/* Контейнер используется для обрезки изображения при scale для эффекта hover */}
-        <div className="movies-card__image-container">
-          <img className="movies-card__image" src={image} alt={name} />
-        </div>
-        <div className="movies-card__description">
-          <h2 className="movies-card__title">{name}</h2>
-          {/* Контрол ниже помещен в обертку, чтобы не отдавать ему контроль opacity,
+        <img className="movies-card__image" src={image} alt={name} />
+      </a>
+      <div className="movies-card__description">
+        <h2 className="movies-card__title">
+          <a
+            className="movies-card__link"
+            href={trailerLink}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {name}
+          </a>
+        </h2>
+        {/* Контрол ниже помещен в обертку, чтобы не отдавать ему контроль opacity,
            о которой он не должен знать. Иначе, если задать контролу transition на уровне
            элемента MoviesCard, то оно сбросится на уровне CloseButton */}
-          <div
-            className={`movies-card__control ${
-              controlType ? `movies-card__control_type_${controlType}` : ''
-            }`}
-          >
-            <InputComponent
-              id={`movie-input-${id}`}
-              controlText={controlText}
-            />
-          </div>
-          <p className="movies-card__duration">{duration}</p>
+        <div
+          className={`movies-card__control ${
+            controlType ? `movies-card__control_type_${controlType}` : ''
+          }`}
+        >
+          <InputComponent id={`movie-input-${id}`} controlText={controlText} />
         </div>
-      </a>
+        <p className="movies-card__duration">{duration}</p>
+      </div>
     </article>
   );
 };

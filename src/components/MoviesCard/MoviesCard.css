@@ -1,17 +1,26 @@
-.movies-card__link {
+.movies-card {
   border-radius: 10px;
-
-  display: block;
-  cursor: pointer;
 
   box-shadow: 0 16px 24px rgba(0, 0, 0, 0.05);
   color: #000;
   text-decoration: none;
 }
 
+.movies-card__link {
+  color: #000;
+  text-decoration: none;
+
+  transition: var(--opacity-transition);
+}
+
+.movies-card__link:hover {
+  opacity: var(--link-hover-opacity);
+}
+
 .movies-card__image-container {
   border-radius: 10px 10px 0 0;
   overflow: hidden;
+  display: block;
 }
 
 .movies-card__image {
@@ -26,7 +35,7 @@
   transition: transform 0.5s ease;
 }
 
-.movies-card__link:hover .movies-card__image {
+.movies-card__image-container:hover .movies-card__image {
   transform: scale(1.02);
 }
 

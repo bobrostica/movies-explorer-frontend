@@ -1,5 +1,6 @@
 .logo {
   display: flex;
+
   transition: var(--opacity-transition);
 }
 

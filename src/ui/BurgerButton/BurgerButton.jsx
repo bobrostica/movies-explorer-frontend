@@ -7,6 +7,7 @@ const BurgerButton = ({ onClick, className, theme }) => (
     className={`burger-button ${className || ''}`}
     type="button"
     onClick={onClick}
+    aria-label="Открыть меню"
   >
     <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
       <path

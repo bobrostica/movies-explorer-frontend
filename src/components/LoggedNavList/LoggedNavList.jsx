@@ -23,6 +23,7 @@ const LoggedNavList = ({ theme }) => {
         <CloseMenuButton
           className="logged-navigation-list__close-button"
           onClick={handleMenuClose}
+          controlText="Закрыть меню"
         />
       </li>
       <li className="logged-navigation-list__item">

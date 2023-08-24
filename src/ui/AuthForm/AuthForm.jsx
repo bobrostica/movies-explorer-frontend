@@ -24,7 +24,11 @@ const AuthForm = ({
         {children}
         <span className="auth-form__error">Что-то пошло не так...</span>
       </fieldset>
-      <button className="auth-form__submit-button" type="submit">
+      <button
+        className="auth-form__submit-button"
+        type="submit"
+        aria-label="Отправить"
+      >
         {buttonText || 'Отправить'}
       </button>
     </form>

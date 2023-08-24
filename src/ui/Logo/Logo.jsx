@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './Logo.css';
 
 const Logo = ({ className }) => (
-  <Link to="/" className={`logo ${className || ''}`}>
+  <Link to="/" aria-label="На главную" className={`logo ${className || ''}`}>
     <svg
       className="logo__image"
       xmlns="http://www.w3.org/2000/svg"

@@ -49,6 +49,7 @@ const MoviesCardList = ({ isLoading, moviesData, controlConfig }) => {
       className="movies-list"
       containerClassName="movies-list__container"
       paddingSize="xs"
+      ariaLabel="Список фильмов"
     >
       {isLoading ? (
         <Preloader />

@@ -5,7 +5,7 @@ import TextLink from '../TextLink/TextLink';
 import FlexList from '../FlexList/FlexList';
 
 const NavBar = () => (
-  <section className="nav-bar">
+  <nav className="nav-bar">
     <FlexList className="nav-bar__list">
       <li>
         <TextLink href="#about" className="nav-bar__link">
@@ -23,7 +23,7 @@ const NavBar = () => (
         </TextLink>
       </li>
     </FlexList>
-  </section>
+  </nav>
 );
 
 export default NavBar;

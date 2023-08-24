@@ -6,7 +6,7 @@ import './SearchForm.css';
 import SwitchToggle from '../SwitchToggle/SwitchToggle';
 
 const SearchForm = () => (
-  <MainSection className="search-form" paddingSize="s">
+  <MainSection className="search-form" paddingSize="s" ariaLabel="Форма поиска">
     <form name="search-form" className="search-form__form">
       <SearcherField
         className="search-form__searcher-fieldset"

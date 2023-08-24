@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import './FormInput.css';
+
 const FormInput = ({
   labelText,
   labelClass,
