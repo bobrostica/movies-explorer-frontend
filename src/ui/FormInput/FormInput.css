@@ -1,3 +1,7 @@
 .form-input__input:focus {
   outline: var(--outline);
 }
+
+.form-input__input::placeholder {
+  color: #a0a0a0;
+}

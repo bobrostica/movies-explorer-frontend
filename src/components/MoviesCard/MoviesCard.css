@@ -66,15 +66,6 @@
   display: flex;
 }
 
-.movies-card__control_type_close-control {
-  opacity: 0;
-  transition: var(--opacity-transition);
-}
-
-.movies-card__link:hover .movies-card__control_type_close-control {
-  opacity: 1;
-}
-
 .movies-card__duration {
   margin: 0;
   grid-area: duration;

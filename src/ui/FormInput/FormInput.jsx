@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './FormInput.css';
 
 const FormInput = ({
+  placeholder,
   labelText,
   labelClass,
   inputClass,
@@ -18,6 +19,7 @@ const FormInput = ({
         {labelText}
       </span>
       <input
+        placeholder={placeholder || null}
         className={`form-input__input ${inputClass || ''}`}
         id={id}
         type={type || 'text'}

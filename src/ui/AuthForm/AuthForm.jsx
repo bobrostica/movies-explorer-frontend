@@ -4,6 +4,8 @@ import FormTitle from '../FormTitle/FormTitle';
 
 import './AuthForm.css';
 import Logo from '../Logo/Logo';
+import SubmitButton from '../SubmitButton/SubmitButton';
+import ErrorTextField from '../ErrorTextField/ErrorTextField';
 
 const AuthForm = ({
   className,
@@ -22,15 +24,13 @@ const AuthForm = ({
     <form className="auth-form__form" name="auth-form">
       <fieldset className="auth-form__fieldset">
         {children}
-        <span className="auth-form__error">Что-то пошло не так...</span>
+        <ErrorTextField className="auth-form__error">
+          Что-то пошло не так...
+        </ErrorTextField>
       </fieldset>
-      <button
-        className="auth-form__submit-button"
-        type="submit"
-        aria-label="Отправить"
-      >
+      <SubmitButton className="auth-form__submit-button" ariaLabel="Отправить">
         {buttonText || 'Отправить'}
-      </button>
+      </SubmitButton>
     </form>
     <p className="auth-form__subtext">
       {additionalText || ''}

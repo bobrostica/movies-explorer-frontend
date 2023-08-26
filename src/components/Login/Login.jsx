@@ -15,20 +15,28 @@ const Login = () => (
       linkText="Регистрация"
     >
       <FormInput
+        required
+        minlength="2"
+        maxlength="30"
         labelText="E-mail"
+        placeholder="Введите email"
         labelClass="auth-form__label"
         inputClass="auth-form__input"
         containerClass="auth-form__input-field"
         type="email"
+        name="email"
         value="pochta@yandex.ru"
         id="email"
       />
       <FormInput
+        required
         labelText="Пароль"
+        placeholder="Ваш пароль"
         labelClass="auth-form__label"
         inputClass="auth-form__input"
         containerClass="auth-form__input-field"
         type="password"
+        name="password"
         id="password"
       />
     </AuthForm>

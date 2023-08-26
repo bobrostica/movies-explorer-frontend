@@ -6,38 +6,40 @@ import FlexList from '../FlexList/FlexList';
 import MainSection from '../MainSection/MainSection';
 
 const Footer = ({ githubLink }) => (
-  <MainSection className="footer" paddingSize="xs">
-    <h2 className="footer__title">
-      Учебный проект Яндекс.Практикум х BeatFilm.
-    </h2>
-    <div className="footer__container">
-      <p className="footer__copyright">© 2023</p>
-      <nav>
-        <FlexList className="footer__nav-list">
-          <li>
-            <TextLink
-              href="https://practicum.yandex.ru"
-              className="footer__link"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Яндекс.Практикум
-            </TextLink>
-          </li>
-          <li>
-            <TextLink
-              href={githubLink}
-              className="footer__link"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Github
-            </TextLink>
-          </li>
-        </FlexList>
-      </nav>
-    </div>
-  </MainSection>
+  <footer className="footer">
+    <MainSection className="footer__main-container" paddingSize="xs">
+      <h2 className="footer__title">
+        Учебный проект Яндекс.Практикум х BeatFilm.
+      </h2>
+      <div className="footer__container">
+        <p className="footer__copyright">© 2023</p>
+        <nav>
+          <FlexList className="footer__nav-list">
+            <li>
+              <TextLink
+                href="https://practicum.yandex.ru"
+                className="footer__link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Яндекс.Практикум
+              </TextLink>
+            </li>
+            <li>
+              <TextLink
+                href={githubLink}
+                className="footer__link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Github
+              </TextLink>
+            </li>
+          </FlexList>
+        </nav>
+      </div>
+    </MainSection>
+  </footer>
 );
 
 export default Footer;

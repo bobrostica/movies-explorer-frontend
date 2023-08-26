@@ -66,6 +66,10 @@
   line-height: normal;
 }
 
+.profile__error {
+  margin-bottom: 20px;
+}
+
 .profile__button {
   padding: 0;
   border: 0;
@@ -80,6 +84,10 @@
 
 .profile__button:hover {
   opacity: var(--link-hover-opacity);
+}
+
+.profile__submit-button {
+  width: 100%;
 }
 
 .profile__button_type_logout {

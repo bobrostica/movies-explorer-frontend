@@ -68,30 +68,10 @@
 .auth-form__error {
   padding-top: 10px;
   margin-bottom: 69px;
-
-  color: #ee3465;
-  font-size: 10px;
-  line-height: normal;
 }
 
 .auth-form__submit-button {
-  min-height: 45px;
   margin-bottom: 16px;
-  border: 0;
-  border-radius: 3px;
-  cursor: pointer;
-
-  color: #fff;
-  background: #ff6838;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: normal;
-
-  transition: var(--opacity-transition);
-}
-
-.auth-form__submit-button:hover {
-  opacity: var(--button-hover-opacity);
 }
 
 .auth-form__subtext {
@@ -132,8 +112,6 @@
 
   .auth-form__submit-button {
     margin-bottom: 14px;
-
-    font-size: 12px;
   }
 
   .auth-form__subtext {

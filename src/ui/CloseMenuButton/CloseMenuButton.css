@@ -8,6 +8,6 @@
   transition: var(--opacity-transition);
 }
 
-.close-button:hover {
+.close-menu-button:hover {
   opacity: var(--link-hover-opacity);
 }

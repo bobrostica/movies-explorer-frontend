@@ -15,7 +15,7 @@ import LoggedNavList from '../LoggedNavList/LoggedNavList';
 
 import { useAppState } from '../../contexts/AppStateContext';
 
-import throttleThisFunc from '../../utils/utils';
+import { throttleThisFunc } from '../../utils/utils';
 import { TABLET_WIDTH, MOBILE_WIDTH } from '../../utils/constants';
 
 const App = () => {
@@ -56,11 +56,6 @@ const App = () => {
 
   return (
     <div className="app">
-      <div
-        className={`app__menu-block ${
-          appState.isMenuOpened ? 'app__menu-block_visible' : ''
-        }`}
-      />
       {appState.isLoggedIn && appState.currentDeviceWidth !== 'desktop' && (
         <LoggedNavList />
       )}
