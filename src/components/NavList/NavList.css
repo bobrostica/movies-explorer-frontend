@@ -1,0 +1,39 @@
+.navigation-list {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 31px;
+
+  list-style-type: none;
+}
+
+.navigation-list__link {
+  color: #000;
+  font-size: 12px;
+  line-height: 1.38;
+  text-decoration: none;
+
+  transition: var(--opacity-transition);
+}
+
+.navigation-list__link:hover {
+  opacity: var(--link-hover-opacity);
+}
+
+.navigation-list__link_theme_dark {
+  color: #fff;
+}
+
+@media screen and (max-width: 640px) {
+  .navigation-list {
+    gap: 14px;
+  }
+
+  .navigation-list__link {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}

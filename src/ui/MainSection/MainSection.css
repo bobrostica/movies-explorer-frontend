@@ -1,0 +1,58 @@
+.main-section {
+  padding-left: var(--padding-desktop);
+  padding-right: var(--padding-desktop);
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-section__container {
+  width: 100%;
+  max-width: var(--max-desktop-width);
+}
+
+@media screen and (max-width: 768px) {
+  .main-section {
+    padding-left: var(--padding-tablet);
+    padding-right: var(--padding-tablet);
+  }
+
+  .main-section_padding-size_m {
+    padding-left: var(--padding-tablet);
+    padding-right: var(--padding-tablet);
+  }
+
+  .main-section_padding-size_s {
+    padding-left: var(--padding-tablet-small);
+    padding-right: var(--padding-tablet-small);
+  }
+
+  .main-section_padding-size_xs {
+    padding-left: var(--padding-tablet-small);
+    padding-right: var(--padding-tablet-small);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .main-section {
+    padding-left: var(--padding-mobile);
+    padding-right: var(--padding-mobile);
+  }
+
+  .main-section_padding-size_m {
+    padding-left: var(--padding-mobile-small);
+    padding-right: var(--padding-mobile-small);
+  }
+
+  .main-section_padding-size_s {
+    padding-left: var(--padding-mobile-small);
+    padding-right: var(--padding-mobile-small);
+  }
+
+  .main-section_padding-size_xs {
+    padding-left: var(--padding-mobile-smallest);
+    padding-right: var(--padding-mobile-smallest);
+  }
+}

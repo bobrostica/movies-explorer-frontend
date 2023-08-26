@@ -1,0 +1,13 @@
+.close-menu-button {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+
+  background: transparent;
+
+  transition: var(--opacity-transition);
+}
+
+.close-menu-button:hover {
+  opacity: var(--link-hover-opacity);
+}

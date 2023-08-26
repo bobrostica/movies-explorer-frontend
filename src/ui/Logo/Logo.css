@@ -1,0 +1,9 @@
+.logo {
+  display: flex;
+
+  transition: var(--opacity-transition);
+}
+
+.logo:hover {
+  opacity: var(--link-hover-opacity);
+}

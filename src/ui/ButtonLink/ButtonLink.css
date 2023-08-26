@@ -1,0 +1,36 @@
+.button-link {
+  padding: 8px 22px;
+  border-radius: 100vmax;
+
+  display: block;
+  background: #f9f9f9;
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.14;
+  text-decoration: none;
+
+  transition: var(--opacity-transition);
+}
+
+.button-link:hover {
+  opacity: var(--link-hover-opacity);
+}
+
+.button-link_theme_fancy {
+  padding: 8px 20px;
+  border-radius: 3px;
+
+  background: #2be080;
+  font-size: 12px;
+  line-height: 1.33;
+}
+
+@media screen and (max-width: 640px) {
+  .button-link_theme_fancy {
+    padding: 5px 12px;
+
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}

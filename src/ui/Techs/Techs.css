@@ -1,0 +1,126 @@
+.techs-section {
+  padding-top: 100px;
+  padding-bottom: 100px;
+
+  background: var(--secondary-landing-bg-color);
+}
+
+.techs-section__title {
+  margin: 0 0 26px;
+  padding-top: 90px;
+  box-sizing: border-box;
+
+  font-size: var(--font-size-large);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -2px;
+  text-align: center;
+}
+
+.techs-section__subtitle {
+  max-width: 460px;
+  margin: 0 auto 100px;
+
+  font-size: var(--font-size-l);
+  line-height: 1.42;
+  letter-spacing: -0.56px;
+  text-align: center;
+}
+
+.techs-section__list {
+  max-width: 690px;
+  margin: 0 auto;
+  padding: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+
+  list-style-type: none;
+}
+
+.techs-section__list-item {
+  min-height: 60px;
+  min-width: 90px;
+  padding: 22px 14px;
+  box-sizing: border-box;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #e8e8e8;
+  font-size: var(--font-size-l);
+  letter-spacing: -0.56px;
+}
+
+@media screen and (max-width: 768px) {
+  .techs-section {
+    padding-top: 91px;
+    padding-bottom: 91px;
+  }
+
+  .techs-section__title {
+    margin-bottom: 22px;
+    padding-top: 80px;
+  }
+
+  .techs-section__subtitle {
+    margin-bottom: 83px;
+
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: -0.48px;
+  }
+
+  .techs-section__list-item {
+    min-height: 57px;
+    min-width: 84px;
+    padding: 21px 15px;
+
+    font-size: 12px;
+    letter-spacing: -0.48px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .techs-section {
+    padding-top: 62px;
+    padding-bottom: 70px;
+
+    background: var(--primary-bg-color);
+  }
+
+  .techs-section__title {
+    margin-bottom: 25px;
+    padding-top: 60px;
+
+    font-size: 30px;
+    line-height: normal;
+    letter-spacing: -1.2px;
+  }
+
+  .techs-section__subtitle {
+    margin-bottom: 50px;
+
+    font-size: 11px;
+    line-height: 1.45;
+    letter-spacing: -0.44px;
+  }
+
+  .techs-section__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(84px, max-content));
+  }
+
+  .techs-section__list-item {
+    min-height: 57px;
+    min-width: 84px;
+    padding: 21px 15px;
+
+    font-size: 12px;
+    letter-spacing: -0.48px;
+  }
+}
