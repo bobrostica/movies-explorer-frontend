@@ -23,6 +23,9 @@ import {
   MOBILE_WIDTH,
   IMAGES_URL,
   SHORT_FILM_DURATION,
+  MOBILE_MOVIES_COUNT,
+  TABLET_MOVIES_COUNT,
+  DESKTOP_MOVIES_COUNT,
 } from '../../utils/constants';
 
 const App = () => {
@@ -30,16 +33,28 @@ const App = () => {
 
   const updateCurrentLayout = () => {
     if (window.innerWidth <= MOBILE_WIDTH) {
-      setAppState((prev) => ({ ...prev, currentDeviceWidth: 'mobile' }));
+      setAppState((prev) => ({
+        ...prev,
+        currentDeviceWidth: 'mobile',
+        visibleMoviesCountBase: MOBILE_MOVIES_COUNT,
+      }));
       return;
     }
 
     if (window.innerWidth <= TABLET_WIDTH) {
-      setAppState((prev) => ({ ...prev, currentDeviceWidth: 'tablet' }));
+      setAppState((prev) => ({
+        ...prev,
+        currentDeviceWidth: 'tablet',
+        visibleMoviesCountBase: TABLET_MOVIES_COUNT,
+      }));
       return;
     }
 
-    setAppState((prev) => ({ ...prev, currentDeviceWidth: 'desktop' }));
+    setAppState((prev) => ({
+      ...prev,
+      currentDeviceWidth: 'desktop',
+      visibleMoviesCountBase: DESKTOP_MOVIES_COUNT,
+    }));
   };
 
   const throttledUpdateCurrentLayout = throttleThisFunc(
