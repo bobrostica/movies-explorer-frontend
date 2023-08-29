@@ -45,3 +45,6 @@ export const checkInputExtraRules = ({ name, value }) => {
       return null;
   }
 };
+
+export const fixMoviesImageUrl = (moviesList, baseUrl) =>
+  moviesList.map((movie) => ({ ...movie, image: baseUrl + movie.image.url }));

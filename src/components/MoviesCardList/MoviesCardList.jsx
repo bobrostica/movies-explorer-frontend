@@ -21,28 +21,24 @@ const MoviesCardList = ({ isLoading, moviesData, controlConfig }) => {
 
   const updateMoviesToShow = () => {
     if (window.innerWidth <= MOBILE_WIDTH) {
-      setMoviesToShow(moviesData.slice(0, MOBILE_MOVIES_COUNT));
-      setShouldShowMore(moviesData.length > MOBILE_MOVIES_COUNT);
+      setMoviesToShow(moviesData?.slice(0, MOBILE_MOVIES_COUNT));
+      setShouldShowMore(moviesData?.length > MOBILE_MOVIES_COUNT);
       return;
     }
 
     if (window.innerWidth <= TABLET_WIDTH) {
-      setMoviesToShow(moviesData.slice(0, TABLET_MOVIES_COUNT));
-      setShouldShowMore(moviesData.length > TABLET_MOVIES_COUNT);
+      setMoviesToShow(moviesData?.slice(0, TABLET_MOVIES_COUNT));
+      setShouldShowMore(moviesData?.length > TABLET_MOVIES_COUNT);
       return;
     }
 
-    setMoviesToShow(moviesData.slice(0, DESKTOP_MOVIES_COUNT));
-    setShouldShowMore(moviesData.length > DESKTOP_MOVIES_COUNT);
+    setMoviesToShow(moviesData?.slice(0, DESKTOP_MOVIES_COUNT));
+    setShouldShowMore(moviesData?.length > DESKTOP_MOVIES_COUNT);
   };
 
   useEffect(() => {
     updateMoviesToShow();
-  }, [currentDeviceWidth]);
-
-  useEffect(() => {
-    updateMoviesToShow();
-  }, []);
+  }, [currentDeviceWidth, moviesData]);
 
   return (
     <MainSection

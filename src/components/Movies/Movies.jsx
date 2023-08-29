@@ -1,23 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { moviesData } from '../../utils/data';
+// import { useAppState } from '../../contexts/AppStateContext';
 import SearchForm from '../../ui/SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import MessageSection from '../../ui/MessageSection/MessageSection';
+import useMovies from '../../hooks/useMovies';
 
-const Movies = () => {
-  const [isLoading] = useState(false);
+const Movies = ({ shortFilmDuration, getMoviesData }) => {
+  const {
+    handleSearchSubmit,
+    handleShortFilmChecked,
+    loadSearchState,
+    filterShortFilm,
+    isLoading,
+    errorMessage,
+    searchString,
+    filteredMovies,
+    isShortFilmChecked,
+  } = useMovies({ shortFilmDuration, getMoviesData });
+
+  useEffect(filterShortFilm, [isShortFilmChecked]);
+
+  useEffect(loadSearchState, []);
 
   return (
     <>
-      <SearchForm />
-      <MoviesCardList
-        isLoading={isLoading}
-        moviesData={moviesData}
-        controlConfig={{
-          controlType: 'save-control',
-          controlText: 'Сохранить',
-        }}
+      <SearchForm
+        onSubmit={handleSearchSubmit}
+        onShortFilmChecked={handleShortFilmChecked}
+        searchString={searchString}
+        isShortFilmChecked={isShortFilmChecked}
       />
+      {errorMessage ? (
+        <MessageSection>{errorMessage}</MessageSection>
+      ) : (
+        <MoviesCardList
+          isLoading={isLoading}
+          moviesData={filteredMovies}
+          controlConfig={{
+            controlType: 'save-control',
+            controlText: 'Сохранить',
+          }}
+        />
+      )}
     </>
   );
 };

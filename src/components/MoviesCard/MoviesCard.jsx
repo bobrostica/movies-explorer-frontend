@@ -4,7 +4,7 @@ import './MoviesCard.css';
 import createComponentByType from '../../utils/ComponentFactory';
 
 const MoviesCard = ({ movie, controlConfig }) => {
-  const { id, name, image, trailerLink, duration } = movie;
+  const { id, nameRU, image, trailerLink, duration } = movie;
   const { controlType, controlText } = controlConfig;
 
   const InputComponent = createComponentByType(controlType);
@@ -22,7 +22,7 @@ const MoviesCard = ({ movie, controlConfig }) => {
         target="_blank"
         rel="noreferrer"
       >
-        <img className="movies-card__image" src={image} alt={name} />
+        <img className="movies-card__image" src={image} alt={nameRU} />
       </a>
       <div className="movies-card__description">
         <h2 className="movies-card__title">
@@ -32,7 +32,7 @@ const MoviesCard = ({ movie, controlConfig }) => {
             target="_blank"
             rel="noreferrer"
           >
-            {name}
+            {nameRU}
           </a>
         </h2>
         {/* Контрол ниже помещен в обертку, чтобы не отдавать ему контроль opacity,

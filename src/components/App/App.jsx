@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+import moviesApi from '../../utils/MoviesApi';
+
 import './App.css';
 import FooterRoutes from '../../routes/FooterRoutes';
 import Main from '../Main/Main';
@@ -15,8 +17,13 @@ import LoggedNavList from '../LoggedNavList/LoggedNavList';
 
 import { useAppState } from '../../contexts/AppStateContext';
 
-import { throttleThisFunc } from '../../utils/utils';
-import { TABLET_WIDTH, MOBILE_WIDTH } from '../../utils/constants';
+import { throttleThisFunc, fixMoviesImageUrl } from '../../utils/utils';
+import {
+  TABLET_WIDTH,
+  MOBILE_WIDTH,
+  IMAGES_URL,
+  SHORT_FILM_DURATION,
+} from '../../utils/constants';
 
 const App = () => {
   const [appState, setAppState] = useAppState();
@@ -40,6 +47,14 @@ const App = () => {
     1000,
   );
 
+  const getMoviesData = async () => {
+    try {
+      return fixMoviesImageUrl(await moviesApi.getMovies(), IMAGES_URL);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     setAppState({
       ...appState,
@@ -62,7 +77,15 @@ const App = () => {
       <Routes>
         <Route element={<HeaderLayout />}>
           <Route path="/" element={<Main />} />
-          <Route path="/movies" element={<Movies />} />
+          <Route
+            path="/movies"
+            element={
+              <Movies
+                shortFilmDuration={SHORT_FILM_DURATION}
+                getMoviesData={getMoviesData}
+              />
+            }
+          />
           <Route path="/saved-movies" element={<SavedMovies />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
