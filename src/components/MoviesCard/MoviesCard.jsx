@@ -9,6 +9,17 @@ const MoviesCard = ({ movie, controlConfig }) => {
 
   const InputComponent = createComponentByType(controlType);
 
+  const getPrettyDuration = (movieDuration) => {
+    if (movieDuration < 60) {
+      return `${movieDuration}м`;
+    }
+
+    const hours = Math.floor(movieDuration / 60);
+    const minutes = movieDuration % 60;
+
+    return `${hours}ч${minutes}м`;
+  };
+
   if (!InputComponent) {
     return null;
   }
@@ -45,7 +56,7 @@ const MoviesCard = ({ movie, controlConfig }) => {
         >
           <InputComponent id={`movie-input-${id}`} controlText={controlText} />
         </div>
-        <p className="movies-card__duration">{duration}</p>
+        <p className="movies-card__duration">{getPrettyDuration(duration)}</p>
       </div>
     </article>
   );
