@@ -10,7 +10,7 @@ const MoviesCardList = ({ isLoading, moviesData, controlConfig }) => {
   const [shouldShowMore, setShouldShowMore] = useState(false);
   const [visibleCardsCount, setVisibleCardsCount] = useState(0);
   const [countMultiplier, setCountMultiplier] = useState(1);
-  const [{ currentDeviceWidth, visibleMoviesCountBase }] = useAppState();
+  const [{ visibleMoviesCountBase }] = useAppState();
 
   const moviesToShow = useMemo(
     () => moviesData?.slice(0, visibleCardsCount),
@@ -29,12 +29,12 @@ const MoviesCardList = ({ isLoading, moviesData, controlConfig }) => {
   };
 
   // Обновит отображение карточек при:
-  // - изменении ширины вьюпорта
+  // - изменении ширины вьюпорта (изменится visibleMoviesCountBase)
   // - изменении мультипликатора
   // - поступлении нового массива с карточками
   useEffect(() => {
     updateVisibleCardsCount();
-  }, [currentDeviceWidth, countMultiplier, moviesData]);
+  }, [visibleMoviesCountBase, countMultiplier, moviesData]);
 
   // При поступлении другого массива фильмов, сбросит мультипликатор
   useEffect(() => {
