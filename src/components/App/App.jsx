@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import moviesApi from '../../utils/MoviesApi';
+import { login, register } from '../../utils/Auth';
 
 import './App.css';
 import FooterRoutes from '../../routes/FooterRoutes';
@@ -16,8 +17,14 @@ import HeaderLayout from '../HeaderLayout/HeaderLayout';
 import LoggedNavList from '../LoggedNavList/LoggedNavList';
 
 import { useAppState } from '../../contexts/AppStateContext';
+import { useUserState } from '../../contexts/UserStateContext';
 
-import { throttleThisFunc, fixMoviesImageUrl } from '../../utils/utils';
+import {
+  throttleThisFunc,
+  fixMoviesImageUrl,
+  handleError,
+} from '../../utils/utils';
+
 import {
   TABLET_WIDTH,
   MOBILE_WIDTH,
@@ -30,6 +37,9 @@ import {
 
 const App = () => {
   const [appState, setAppState] = useAppState();
+  const [, setUserInfoState] = useUserState();
+
+  const navigate = useNavigate();
 
   const updateCurrentLayout = () => {
     if (window.innerWidth <= MOBILE_WIDTH) {
@@ -70,10 +80,33 @@ const App = () => {
     }
   };
 
+  const preparePage = (userInfo) => {
+    setUserInfoState({ ...userInfo });
+    setAppState((prev) => ({ ...prev, isLoggedIn: true }));
+    navigate('/movies', { replace: true });
+  };
+
+  const handleLogin = (data, showMessage) => {
+    const signin = async () => {
+      const userInfo = await login(data);
+      preparePage(userInfo);
+    };
+    handleError(signin(), showMessage);
+  };
+
+  const handleRegister = (data, showMessage) => {
+    const { email, password } = data;
+    const authorize = async () => {
+      await register(data);
+      return handleLogin({ email, password });
+    };
+    return handleError(authorize(), showMessage);
+  };
+
   useEffect(() => {
     setAppState({
       ...appState,
-      isLoggedIn: true,
+      isLoggedIn: false,
       isMenuOpened: false,
     });
     updateCurrentLayout();
@@ -105,7 +138,10 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/signin" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
+        <Route
+          path="/signup"
+          element={<Register onRegister={handleRegister} />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

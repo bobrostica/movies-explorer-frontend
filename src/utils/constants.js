@@ -11,3 +11,8 @@ export const MOBILE_MOVIES_COUNT = 5;
 
 export const MOVIES_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 export const IMAGES_URL = 'https://api.nomoreparties.co/';
+
+// export const BASE_URL = 'https://api.movie-info.nomoreparties.co/';
+export const BASE_URL = 'http://localhost:3001/';
+
+export const DEFAULT_ERROR_MESSAGE = 'Что-то пошло не так...';

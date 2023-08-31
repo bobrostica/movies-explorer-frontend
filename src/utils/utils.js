@@ -1,3 +1,5 @@
+import { DEFAULT_ERROR_MESSAGE } from './constants';
+
 export function throttleThisFunc(callee, delay) {
   let isThrottled = null;
   let savedArgs = null;
@@ -48,3 +50,29 @@ export const checkInputExtraRules = ({ name, value }) => {
 
 export const fixMoviesImageUrl = (moviesList, baseUrl) =>
   moviesList.map((movie) => ({ ...movie, image: baseUrl + movie.image.url }));
+
+export const handleError = (promise, pushErrorMessage) => {
+  return promise.catch((err) => {
+    if (pushErrorMessage) {
+      pushErrorMessage(err.message);
+      return;
+    }
+
+    console.log(err.message);
+  });
+};
+
+export const handleResponse = async (response) => {
+  let resData = null;
+  try {
+    resData = await response.json();
+  } catch {
+    return new Error(DEFAULT_ERROR_MESSAGE);
+  }
+
+  if (response.ok) {
+    return resData;
+  }
+
+  return Promise.reject(new Error(resData.error ?? resData.message));
+};

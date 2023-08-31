@@ -41,10 +41,6 @@
   flex-direction: column;
 }
 
-.auth-form__input-field:not(:last-of-type) {
-  margin-bottom: 20px;
-}
-
 .auth-form__label {
   margin-bottom: 10px;
 
@@ -65,9 +61,16 @@
   line-height: normal;
 }
 
-.auth-form__error {
-  padding-top: 10px;
-  margin-bottom: 69px;
+.auth-form__validation-error {
+  min-height: 20px;
+  padding-top: 8px;
+  box-sizing: border-box;
+}
+
+.auth-form__submit-error {
+  padding-bottom: 20px;
+
+  text-align: center;
 }
 
 .auth-form__submit-button {
