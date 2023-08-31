@@ -137,7 +137,7 @@ const App = () => {
           <Route path="/saved-movies" element={<SavedMovies />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
-        <Route path="/signin" element={<Login />} />
+        <Route path="/signin" element={<Login onLogin={handleLogin} />} />
         <Route
           path="/signup"
           element={<Register onRegister={handleRegister} />}
