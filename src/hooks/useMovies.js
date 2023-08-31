@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { LOCALSTORAGE_SEARCH_STATE_NAME } from '../utils/constants';
+
 const useMovies = ({ shortFilmDuration, getMoviesData }) => {
   const [moviesData, setMoviesData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +33,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
 
   const saveSearchState = (searchResult, searchStr, isShort) => {
     localStorage.setItem(
-      'lastSearch',
+      LOCALSTORAGE_SEARCH_STATE_NAME,
       JSON.stringify({
         isShortFilmChecked: isShort,
         searchString: searchStr,
@@ -41,7 +43,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
   };
 
   const clearSearchState = () => {
-    localStorage.removeItem('lastSearch');
+    localStorage.removeItem(LOCALSTORAGE_SEARCH_STATE_NAME);
   };
 
   // Обработчик ошибок
@@ -110,7 +112,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
 
   // Загружаемся из localStorage
   const loadSearchState = () => {
-    const lastSearch = localStorage.getItem('lastSearch');
+    const lastSearch = localStorage.getItem(LOCALSTORAGE_SEARCH_STATE_NAME);
 
     if (!lastSearch) {
       return;

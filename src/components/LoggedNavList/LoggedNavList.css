@@ -5,12 +5,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 17px;
 
   list-style-type: none;
 }
 
 .logged-navigation-list__item {
-  padding-left: 17px;
+  /* padding-left: 17px; */
 }
 
 .logged-navigation-list__item:first-child {

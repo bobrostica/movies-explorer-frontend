@@ -16,3 +16,5 @@ export const IMAGES_URL = 'https://api.nomoreparties.co/';
 export const BASE_URL = 'http://localhost:3001/';
 
 export const DEFAULT_ERROR_MESSAGE = 'Что-то пошло не так...';
+
+export const LOCALSTORAGE_SEARCH_STATE_NAME = 'lastSearch';

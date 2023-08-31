@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import moviesApi from '../../utils/MoviesApi';
-import { login, register } from '../../utils/Auth';
+import mainApi from '../../utils/MainApi';
+import { login, register, logout } from '../../utils/Auth';
 
 import './App.css';
 import FooterRoutes from '../../routes/FooterRoutes';
@@ -33,6 +34,7 @@ import {
   MOBILE_MOVIES_COUNT,
   TABLET_MOVIES_COUNT,
   DESKTOP_MOVIES_COUNT,
+  LOCALSTORAGE_SEARCH_STATE_NAME,
 } from '../../utils/constants';
 
 const App = () => {
@@ -103,13 +105,48 @@ const App = () => {
     return handleError(authorize(), showMessage);
   };
 
-  useEffect(() => {
+  const handleLogout = (showMessage) => {
+    const signOut = async () => {
+      await logout();
+      navigate('/', { replace: true });
+      setAppState({
+        ...appState,
+        isLoggedIn: false,
+      });
+      localStorage.removeItem(LOCALSTORAGE_SEARCH_STATE_NAME);
+    };
+    handleError(signOut(), showMessage);
+  };
+
+  const handleUserUpdate = (data, showMessage) => {
+    const userUpdate = async () => {
+      const userInfo = await mainApi.updateUser(data);
+      setUserInfoState({ ...userInfo });
+    };
+    handleError(userUpdate(), showMessage);
+  };
+
+  const initialPageLoad = async () => {
+    let isLoggedIn = false;
+    let userInfo = null;
+    const execAutoLogin = async () => {
+      userInfo = await mainApi.getUserInfo();
+      isLoggedIn = true;
+      setUserInfoState({ ...userInfo });
+    };
+    await handleError(execAutoLogin());
+
     setAppState({
       ...appState,
-      isLoggedIn: false,
       isMenuOpened: false,
+      isLoggedIn,
     });
+
     updateCurrentLayout();
+  };
+
+  useEffect(() => {
+    initialPageLoad();
 
     window.addEventListener('resize', throttledUpdateCurrentLayout);
 
@@ -135,7 +172,15 @@ const App = () => {
             }
           />
           <Route path="/saved-movies" element={<SavedMovies />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                onUserUpdate={handleUserUpdate}
+                onLogout={handleLogout}
+              />
+            }
+          />
         </Route>
         <Route path="/signin" element={<Login onLogin={handleLogin} />} />
         <Route

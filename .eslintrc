@@ -21,6 +21,7 @@
     "react/prop-types": 0,
     "react/jsx-filename-extension": ["off"],
     "react/jsx-props-no-spreading": ["off"],
+    "no-restricted-syntax": 0,
     "react/function-component-definition": [
       2,
       {

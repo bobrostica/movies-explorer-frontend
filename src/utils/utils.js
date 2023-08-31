@@ -28,26 +28,6 @@ export function throttleThisFunc(callee, delay) {
   };
 }
 
-export const checkInputExtraRules = ({ name, value }) => {
-  const checkRule = (regexp, inputValue, errorText) => {
-    if (!regexp.test(inputValue)) {
-      return errorText;
-    }
-    return null;
-  };
-
-  switch (name) {
-    case 'email':
-      return checkRule(
-        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-        value,
-        'Некорректный email',
-      );
-    default:
-      return null;
-  }
-};
-
 export const fixMoviesImageUrl = (moviesList, baseUrl) =>
   moviesList.map((movie) => ({ ...movie, image: baseUrl + movie.image.url }));
 
@@ -75,4 +55,28 @@ export const handleResponse = async (response) => {
   }
 
   return Promise.reject(new Error(resData.error ?? resData.message));
+};
+
+export const isDeepEqual = (object1, object2) => {
+  const isObject = (object) => object != null && typeof object === 'object';
+
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  for (const key of keys1) {
+    const val1 = object1[key];
+    const val2 = object2[key];
+    const areBothObjects = isObject(val1) && isObject(val2);
+    if (
+      (areBothObjects && !isDeepEqual(val1, val2)) ||
+      (!areBothObjects && val1 !== val2)
+    ) {
+      return false;
+    }
+  }
+  return true;
 };

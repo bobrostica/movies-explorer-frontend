@@ -32,3 +32,10 @@ export const register = (data) => {
     data,
   });
 };
+
+export const logout = () => {
+  return handleQuery({
+    method: 'POST',
+    link: 'signout',
+  });
+};
