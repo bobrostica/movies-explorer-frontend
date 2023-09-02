@@ -2,27 +2,21 @@ import React from 'react';
 
 import './MoviesCard.css';
 import createComponentByType from '../../utils/ComponentFactory';
+import { getPrettyDuration } from '../../utils/utils';
 
-const MoviesCard = ({ movie, controlConfig }) => {
-  const { id, nameRU, image, trailerLink, duration } = movie;
+const MoviesCard = ({ movie, isSaved, controlConfig, onControlClick }) => {
+  const { movieId, nameRU, image, trailerLink, duration } = movie;
   const { controlType, controlText } = controlConfig;
 
   const InputComponent = createComponentByType(controlType);
 
-  const getPrettyDuration = (movieDuration) => {
-    if (movieDuration < 60) {
-      return `${movieDuration}м`;
-    }
-
-    const hours = Math.floor(movieDuration / 60);
-    const minutes = movieDuration % 60;
-
-    return `${hours}ч${minutes}м`;
-  };
-
   if (!InputComponent) {
     return null;
   }
+
+  const handleControlClick = (result) => {
+    onControlClick(movie, result);
+  };
 
   return (
     <article className="movies-card">
@@ -54,7 +48,12 @@ const MoviesCard = ({ movie, controlConfig }) => {
             controlType ? `movies-card__control_type_${controlType}` : ''
           }`}
         >
-          <InputComponent id={`movie-input-${id}`} controlText={controlText} />
+          <InputComponent
+            checked={isSaved}
+            onClick={handleControlClick}
+            id={`movie-input-${movieId}`}
+            controlText={controlText}
+          />
         </div>
         <p className="movies-card__duration">{getPrettyDuration(duration)}</p>
       </div>

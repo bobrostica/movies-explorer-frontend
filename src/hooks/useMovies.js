@@ -1,6 +1,9 @@
 import { useState } from 'react';
-
-import { LOCALSTORAGE_SEARCH_STATE_NAME } from '../utils/constants';
+import {
+  getSearchState,
+  removeSearchState,
+  saveSearchState,
+} from '../utils/utils';
 
 const useMovies = ({ shortFilmDuration, getMoviesData }) => {
   const [moviesData, setMoviesData] = useState([]);
@@ -31,21 +34,6 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     );
   };
 
-  const saveSearchState = (searchResult, searchStr, isShort) => {
-    localStorage.setItem(
-      LOCALSTORAGE_SEARCH_STATE_NAME,
-      JSON.stringify({
-        isShortFilmChecked: isShort,
-        searchString: searchStr,
-        searchResult,
-      }),
-    );
-  };
-
-  const clearSearchState = () => {
-    localStorage.removeItem(LOCALSTORAGE_SEARCH_STATE_NAME);
-  };
-
   // Обработчик ошибок
   const handleError = async (func) => {
     try {
@@ -54,7 +42,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
       setErrorMessage(
         'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.',
       );
-      clearSearchState();
+      removeSearchState();
     }
   };
 
@@ -64,11 +52,15 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
 
     if (searchResult.length === 0) {
       setErrorMessage('Ничего не найдено');
-      clearSearchState();
+      removeSearchState();
       return;
     }
 
-    saveSearchState(searchResult, searchStr, isShort);
+    saveSearchState({
+      isShortFilmChecked: isShort,
+      searchString: searchStr,
+      searchResult,
+    });
     setFilteredMovies(searchResult);
   };
 
@@ -91,7 +83,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
 
     if (!searchStr) {
       setErrorMessage('Нужно ввести ключевое слово');
-      clearSearchState();
+      removeSearchState();
       return;
     }
 
@@ -99,10 +91,8 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
       setErrorMessage('');
     }
 
-    handleError(async () => {
-      const movies = await loadMoviesData();
-      filterMovies(movies, searchStr, isShortFilmChecked);
-    });
+    const movies = await loadMoviesData();
+    filterMovies(movies, searchStr, isShortFilmChecked);
   };
 
   // Обработчик переключателя
@@ -112,7 +102,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
 
   // Загружаемся из localStorage
   const loadSearchState = () => {
-    const lastSearch = localStorage.getItem(LOCALSTORAGE_SEARCH_STATE_NAME);
+    const lastSearch = getSearchState();
 
     if (!lastSearch) {
       return;
@@ -122,16 +112,22 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
       isShortFilmChecked: isShort,
       searchString: searchStr,
       searchResult: searchRes,
-    } = JSON.parse(lastSearch);
+    } = lastSearch;
 
-    handleError(() => loadMoviesData());
+    if (moviesData.length === 0) {
+      setMoviesData(searchRes);
+    }
+
     setSearchString(searchStr);
     setFilteredMovies(searchRes);
     setIsShortFilmChecked(isShort);
   };
 
+  // Показ короткометражек
   const filterShortFilm = () => {
     if (searchString && moviesData.length > 0) {
+      // Обновляем содержимове moviesData
+      loadMoviesData();
       setErrorMessage('');
       handleError(() =>
         filterMovies(moviesData, searchString, isShortFilmChecked),
@@ -144,6 +140,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     handleShortFilmChecked,
     loadSearchState,
     filterShortFilm,
+    setMoviesData,
     isLoading,
     errorMessage,
     searchString,

@@ -2,7 +2,7 @@ import React from 'react';
 
 import './SearchButton.css';
 
-const SearchButton = ({ isValid, className, onClick }) => {
+const SearchButton = ({ className, onClick, isPending }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onClick();
@@ -12,7 +12,7 @@ const SearchButton = ({ isValid, className, onClick }) => {
     <button
       className={`search-button ${className || ''}`}
       type="submit"
-      disabled={isValid}
+      disabled={isPending}
       onClick={handleSubmit}
     >
       <svg

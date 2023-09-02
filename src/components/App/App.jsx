@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import moviesApi from '../../utils/MoviesApi';
@@ -22,8 +22,10 @@ import { useUserState } from '../../contexts/UserStateContext';
 
 import {
   throttleThisFunc,
-  fixMoviesImageUrl,
   handleError,
+  prepareMovies,
+  getSearchState,
+  saveSearchState,
 } from '../../utils/utils';
 
 import {
@@ -38,6 +40,9 @@ import {
 } from '../../utils/constants';
 
 const App = () => {
+  const [moviesData, setMoviesData] = useState([]);
+  const [savedMoviesData, setSavedMoviesData] = useState([]);
+  const [lastSearchState, setLastSearchState] = useState([]);
   const [appState, setAppState] = useAppState();
   const [, setUserInfoState] = useUserState();
 
@@ -74,12 +79,36 @@ const App = () => {
     1000,
   );
 
-  const getMoviesData = async () => {
-    try {
-      return fixMoviesImageUrl(await moviesApi.getMovies(), IMAGES_URL);
-    } catch (err) {
-      console.log(err);
+  const getSavedMoviesData = async () => {
+    if (savedMoviesData.length === 0) {
+      let movies = [];
+      const getMovies = async () => {
+        movies = await mainApi.getSavedMovies();
+        setSavedMoviesData(movies);
+      };
+      await handleError(getMovies());
+      return movies;
     }
+
+    return savedMoviesData;
+  };
+
+  const getMoviesData = async () => {
+    // Загружаем также сохраненные, чтобы корректно включить чекбоксы в /movies
+    const savedMovies = await getSavedMoviesData();
+    let newMovies = moviesData;
+
+    if (newMovies.length === 0) {
+      const getMovies = async () => {
+        newMovies = await moviesApi.getMovies();
+      };
+      await handleError(getMovies());
+    }
+
+    const preparedMovies = prepareMovies(savedMovies, newMovies, IMAGES_URL);
+    setMoviesData(preparedMovies);
+
+    return preparedMovies;
   };
 
   const preparePage = (userInfo) => {
@@ -126,21 +155,60 @@ const App = () => {
     handleError(userUpdate(), showMessage);
   };
 
+  const updateLocalStoredMovies = (savedMovies) => {
+    const { searchResult, ...args } = getSearchState();
+    const preparedMovies = prepareMovies(savedMovies, searchResult);
+    saveSearchState({ searchResult: preparedMovies, ...args });
+    setLastSearchState(preparedMovies);
+  };
+
+  const updateMoviesStates = (savedMovies) => {
+    const preparedMovies = prepareMovies(savedMovies, moviesData);
+    updateLocalStoredMovies(savedMovies);
+    setMoviesData(preparedMovies);
+    setSavedMoviesData(savedMovies);
+  };
+
+  // Eдаление фильма по роуту /saved-movies
+  const handleDeleteMovie = (movie) => {
+    return handleError(
+      (async () => {
+        await mainApi.deleteMovie(movie._id);
+        const savedMovies = savedMoviesData.filter(
+          (savedMovie) => savedMovie._id !== movie._id,
+        );
+        updateMoviesStates(savedMovies);
+      })(),
+    );
+  };
+
+  // Сохранение/удаление фильма по роуту /movies
+  const handleMovieOperate = (movie, isSaving) => {
+    if (isSaving) {
+      return handleError(
+        (async () => {
+          const savedMovie = await mainApi.saveMovie(movie);
+          const savedMovies = [...savedMoviesData, savedMovie];
+          updateMoviesStates(savedMovies);
+        })(),
+      );
+    }
+
+    return handleDeleteMovie(movie);
+  };
+
   const initialPageLoad = async () => {
-    let isLoggedIn = false;
-    let userInfo = null;
     const execAutoLogin = async () => {
-      userInfo = await mainApi.getUserInfo();
-      isLoggedIn = true;
+      const userInfo = await mainApi.getUserInfo();
+
+      setAppState({
+        ...appState,
+        isMenuOpened: false,
+        isLoggedIn: true,
+      });
       setUserInfoState({ ...userInfo });
     };
     await handleError(execAutoLogin());
-
-    setAppState({
-      ...appState,
-      isMenuOpened: false,
-      isLoggedIn,
-    });
 
     updateCurrentLayout();
   };
@@ -166,12 +234,24 @@ const App = () => {
             path="/movies"
             element={
               <Movies
+                moviesData={moviesData}
+                lastSearchState={lastSearchState}
                 shortFilmDuration={SHORT_FILM_DURATION}
                 getMoviesData={getMoviesData}
+                onCardControlClick={handleMovieOperate}
+                loadSavedMovies={getSavedMoviesData}
               />
             }
           />
-          <Route path="/saved-movies" element={<SavedMovies />} />
+          <Route
+            path="/saved-movies"
+            element={
+              <SavedMovies
+                savedMovies={savedMoviesData}
+                onDeleteMovie={handleDeleteMovie}
+              />
+            }
+          />
           <Route
             path="/profile"
             element={

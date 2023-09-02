@@ -8,6 +8,7 @@ const SwitchToggle = ({
   className,
   onClick,
   isChecked,
+  isPending,
 }) => {
   const handleCheckboxClick = (e) => {
     onClick(e.target.checked);
@@ -16,6 +17,7 @@ const SwitchToggle = ({
   return (
     <div className={`switch-toggle ${className || ''}`}>
       <input
+        disabled={isPending}
         checked={isChecked}
         type="checkbox"
         id={id}

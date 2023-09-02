@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { savedMovies } from '../../utils/data';
 import SearchForm from '../../ui/SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import MessageSection from '../../ui/MessageSection/MessageSection';
@@ -22,7 +21,7 @@ const SavedMovies = () => {
       ) : (
         <MoviesCardList
           isLoading={isLoading}
-          moviesData={savedMovies}
+          moviesData={[]}
           controlConfig={{
             controlType: 'close-control',
             controlText: 'Удалить',

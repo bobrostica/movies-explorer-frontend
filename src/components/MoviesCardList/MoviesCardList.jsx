@@ -6,7 +6,12 @@ import Preloader from '../../ui/Preloader/Preloader';
 import './MoviesCardList.css';
 import { useAppState } from '../../contexts/AppStateContext';
 
-const MoviesCardList = ({ isLoading, moviesData, controlConfig }) => {
+const MoviesCardList = ({
+  isLoading,
+  moviesData,
+  controlConfig,
+  onCardControlClick,
+}) => {
   const [shouldShowMore, setShouldShowMore] = useState(false);
   const [visibleCardsCount, setVisibleCardsCount] = useState(0);
   const [countMultiplier, setCountMultiplier] = useState(1);
@@ -53,8 +58,13 @@ const MoviesCardList = ({ isLoading, moviesData, controlConfig }) => {
       ) : (
         <ul className="movies-list__list">
           {moviesToShow?.map((movie) => (
-            <li key={movie.id}>
-              <MoviesCard movie={movie} controlConfig={controlConfig} />
+            <li key={movie.movieId}>
+              <MoviesCard
+                movie={movie}
+                controlConfig={controlConfig}
+                onControlClick={onCardControlClick}
+                isSaved={movie._id}
+              />
             </li>
           ))}
         </ul>

@@ -1,4 +1,18 @@
-import { DEFAULT_ERROR_MESSAGE } from './constants';
+import {
+  DEFAULT_ERROR_MESSAGE,
+  LOCALSTORAGE_SEARCH_STATE_NAME,
+} from './constants';
+
+export const getPrettyDuration = (movieDuration) => {
+  if (movieDuration < 60) {
+    return `${movieDuration}м`;
+  }
+
+  const hours = Math.floor(movieDuration / 60);
+  const minutes = movieDuration % 60;
+
+  return `${hours}ч${minutes}м`;
+};
 
 export function throttleThisFunc(callee, delay) {
   let isThrottled = null;
@@ -28,8 +42,46 @@ export function throttleThisFunc(callee, delay) {
   };
 }
 
-export const fixMoviesImageUrl = (moviesList, baseUrl) =>
-  moviesList.map((movie) => ({ ...movie, image: baseUrl + movie.image.url }));
+export const fixMovieScheme = (movie, imageBaseUrl) => {
+  let { image, movieId } = movie;
+
+  // Если movie с beat-films, то меняем поля
+  if (!movieId) {
+    image = imageBaseUrl + image.url;
+    movieId = movie.id;
+  }
+
+  return {
+    country: movie.country,
+    director: movie.director,
+    duration: movie.duration,
+    year: movie.year,
+    description: movie.description,
+    trailerLink: movie.trailerLink,
+    nameRU: movie.nameRU,
+    nameEN: movie.nameEN,
+    movieId,
+    image,
+    thumbnail: image,
+  };
+};
+
+// Приводим объекты, полученные с beat-film к общему виду с бэком
+export const prepareMovies = (
+  savedMovieList,
+  moviesList,
+  imageBaseUrl = '',
+) => {
+  const savedMoviesMap = new Map();
+  savedMovieList.forEach((movie) => savedMoviesMap.set(movie.movieId, movie));
+  return moviesList.map((movie) => {
+    if (savedMoviesMap.has(movie.id || movie.movieId)) {
+      return savedMoviesMap.get(movie.id || movie.movieId);
+    }
+
+    return fixMovieScheme(movie, imageBaseUrl);
+  });
+};
 
 export const handleError = (promise, pushErrorMessage) => {
   return promise.catch((err) => {
@@ -38,7 +90,7 @@ export const handleError = (promise, pushErrorMessage) => {
       return;
     }
 
-    console.log(err.message);
+    console.log(err);
   });
 };
 
@@ -79,4 +131,28 @@ export const isDeepEqual = (object1, object2) => {
     }
   }
   return true;
+};
+
+export const getSearchState = () => {
+  const lastSearch = localStorage.getItem(LOCALSTORAGE_SEARCH_STATE_NAME);
+
+  if (!lastSearch) {
+    return;
+  }
+
+  const { isShortFilmChecked, searchString, searchResult } =
+    JSON.parse(lastSearch);
+
+  return { isShortFilmChecked, searchString, searchResult };
+};
+
+export const saveSearchState = (searchState) => {
+  localStorage.setItem(
+    LOCALSTORAGE_SEARCH_STATE_NAME,
+    JSON.stringify(searchState),
+  );
+};
+
+export const removeSearchState = () => {
+  localStorage.removeItem(LOCALSTORAGE_SEARCH_STATE_NAME);
 };

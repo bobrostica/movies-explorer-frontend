@@ -75,6 +75,14 @@ class MainApi {
   getSavedMovies() {
     return this.getData('movies');
   }
+
+  saveMovie(data) {
+    return this.postData('movies', data);
+  }
+
+  deleteMovie(movieId) {
+    return this.deleteData(`movies/${movieId}`);
+  }
 }
 
 const mainApi = new MainApi({

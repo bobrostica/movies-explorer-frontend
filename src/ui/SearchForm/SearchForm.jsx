@@ -10,6 +10,7 @@ const SearchForm = ({
   onShortFilmChecked,
   isShortFilmChecked,
   searchString,
+  isPending,
 }) => (
   <MainSection className="search-form" paddingSize="s" ariaLabel="Форма поиска">
     <form name="search-form" className="search-form__form">
@@ -18,6 +19,7 @@ const SearchForm = ({
         placeholder="Фильм"
         onSubmit={onSubmit}
         initialValue={searchString}
+        isPending={isPending}
       />
       <SwitchToggle
         isChecked={isShortFilmChecked}
@@ -25,6 +27,7 @@ const SearchForm = ({
         onClick={onShortFilmChecked}
         labelText="Короткометражки"
         id="toggle-short-film"
+        isPending={isPending}
       />
     </form>
   </MainSection>
