@@ -3,6 +3,7 @@ import {
   getSearchState,
   removeSearchState,
   saveSearchState,
+  getMoviesByNameContains,
 } from '../utils/utils';
 
 const useMovies = ({ shortFilmDuration, getMoviesData }) => {
@@ -12,27 +13,6 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
   const [searchString, setSearchString] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
-
-  // Получаем отфильтрованный массив
-  const getMoviesByNameContains = (
-    moviesList,
-    searchStr,
-    isShortFilmsOnly = false,
-  ) => {
-    let minDuration = Number.MAX_SAFE_INTEGER;
-    const loweredSearchStr = searchStr.toLowerCase();
-
-    if (isShortFilmsOnly) {
-      minDuration = shortFilmDuration;
-    }
-
-    return moviesList?.filter(
-      ({ nameRU, nameEN, duration }) =>
-        (nameRU.toLowerCase().includes(loweredSearchStr) ||
-          nameEN.toLowerCase().includes(loweredSearchStr)) &&
-        duration <= minDuration,
-    );
-  };
 
   // Обработчик ошибок
   const handleError = async (func) => {
@@ -48,7 +28,12 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
 
   // Отфильтрованный массив сохраняем в localStorage и в state
   const filterMovies = (movies, searchStr, isShort) => {
-    const searchResult = getMoviesByNameContains(movies, searchStr, isShort);
+    const searchResult = getMoviesByNameContains(
+      movies,
+      searchStr,
+      shortFilmDuration,
+      isShort,
+    );
 
     if (searchResult.length === 0) {
       setErrorMessage('Ничего не найдено');
@@ -77,6 +62,13 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     return movies;
   };
 
+  const refreshMovieStates = () => {
+    handleError(async () => {
+      const movies = await loadMoviesData();
+      filterMovies(movies, searchString, isShortFilmChecked);
+    });
+  };
+
   // Обработчик кнопки поиска
   const handleSearchSubmit = async (searchStr) => {
     setSearchString(searchStr);
@@ -93,6 +85,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
 
     const movies = await loadMoviesData();
     filterMovies(movies, searchStr, isShortFilmChecked);
+    // await refreshMovieStates();
   };
 
   // Обработчик переключателя
@@ -127,11 +120,12 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
   const filterShortFilm = () => {
     if (searchString && moviesData.length > 0) {
       // Обновляем содержимове moviesData
-      loadMoviesData();
+      // loadMoviesData();
       setErrorMessage('');
-      handleError(() =>
-        filterMovies(moviesData, searchString, isShortFilmChecked),
-      );
+      refreshMovieStates();
+      // handleError(() =>
+      //   filterMovies(moviesData, searchString, isShortFilmChecked),
+      // );
     }
   };
 
@@ -141,6 +135,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     loadSearchState,
     filterShortFilm,
     setMoviesData,
+    refreshMovieStates,
     isLoading,
     errorMessage,
     searchString,

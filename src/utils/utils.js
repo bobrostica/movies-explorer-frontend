@@ -3,6 +3,7 @@ import {
   LOCALSTORAGE_SEARCH_STATE_NAME,
 } from './constants';
 
+// Форматирование времени
 export const getPrettyDuration = (movieDuration) => {
   if (movieDuration < 60) {
     return `${movieDuration}м`;
@@ -14,6 +15,7 @@ export const getPrettyDuration = (movieDuration) => {
   return `${hours}ч${minutes}м`;
 };
 
+// HOC задержки для функции
 export function throttleThisFunc(callee, delay) {
   let isThrottled = null;
   let savedArgs = null;
@@ -42,10 +44,11 @@ export function throttleThisFunc(callee, delay) {
   };
 }
 
+// Создание нормализованного movie
 export const fixMovieScheme = (movie, imageBaseUrl) => {
   let { image, movieId } = movie;
 
-  // Если movie с beat-films, то меняем поля
+  // Если movie от beat-films, то меняем поля
   if (!movieId) {
     image = imageBaseUrl + image.url;
     movieId = movie.id;
@@ -66,7 +69,7 @@ export const fixMovieScheme = (movie, imageBaseUrl) => {
   };
 };
 
-// Приводим объекты, полученные с beat-film к общему виду с бэком
+// Приводим объекты, полученные от beat-film к общему виду с бэком
 export const prepareMovies = (
   savedMovieList,
   moviesList,
@@ -83,6 +86,7 @@ export const prepareMovies = (
   });
 };
 
+// Общий обработчик ошибок для промисов
 export const handleError = (promise, pushErrorMessage) => {
   return promise.catch((err) => {
     if (pushErrorMessage) {
@@ -94,6 +98,7 @@ export const handleError = (promise, pushErrorMessage) => {
   });
 };
 
+// Обработчик ответа от сервера
 export const handleResponse = async (response) => {
   let resData = null;
   try {
@@ -109,6 +114,7 @@ export const handleResponse = async (response) => {
   return Promise.reject(new Error(resData.error ?? resData.message));
 };
 
+// Глубокое сравнение двух объектов
 export const isDeepEqual = (object1, object2) => {
   const isObject = (object) => object != null && typeof object === 'object';
 
@@ -133,6 +139,7 @@ export const isDeepEqual = (object1, object2) => {
   return true;
 };
 
+// Получение параметров последнего поиска
 export const getSearchState = () => {
   const lastSearch = localStorage.getItem(LOCALSTORAGE_SEARCH_STATE_NAME);
 
@@ -146,6 +153,7 @@ export const getSearchState = () => {
   return { isShortFilmChecked, searchString, searchResult };
 };
 
+// Сохранение параметров последнего поиска
 export const saveSearchState = (searchState) => {
   localStorage.setItem(
     LOCALSTORAGE_SEARCH_STATE_NAME,
@@ -153,6 +161,29 @@ export const saveSearchState = (searchState) => {
   );
 };
 
+// Удаление параметров последнего поиска
 export const removeSearchState = () => {
   localStorage.removeItem(LOCALSTORAGE_SEARCH_STATE_NAME);
+};
+
+// Получаем отфильтрованный массив
+export const getMoviesByNameContains = (
+  moviesList,
+  searchStr,
+  shortFilmDuration,
+  isShortFilmsOnly = false,
+) => {
+  let minDuration = Number.MAX_SAFE_INTEGER;
+  const loweredSearchStr = searchStr.toLowerCase();
+
+  if (isShortFilmsOnly) {
+    minDuration = shortFilmDuration;
+  }
+
+  return moviesList?.filter(
+    ({ nameRU, nameEN, duration }) =>
+      (nameRU.toLowerCase().includes(loweredSearchStr) ||
+        nameEN.toLowerCase().includes(loweredSearchStr)) &&
+      duration <= minDuration,
+  );
 };

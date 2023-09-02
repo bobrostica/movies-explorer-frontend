@@ -8,7 +8,6 @@ import useMovies from '../../hooks/useMovies';
 
 const Movies = ({
   moviesData,
-  // lastSearchState,
   shortFilmDuration,
   getMoviesData,
   onCardControlClick,
@@ -19,7 +18,6 @@ const Movies = ({
     handleShortFilmChecked,
     loadSearchState,
     filterShortFilm,
-    // setMoviesData,
     isLoading,
     errorMessage,
     searchString,
@@ -35,15 +33,8 @@ const Movies = ({
     }
   }, [moviesData]);
 
-  // useEffect(() => {
-  //   if (lastSearchState.length !== 0) {
-  //     setMoviesData(lastSearchState);
-  //   }
-  // }, [lastSearchState]);
-
   useEffect(filterShortFilm, [isShortFilmChecked]);
-
-  // useEffect(loadSearchState, []);
+  useEffect(loadSearchState, []);
 
   return (
     <>

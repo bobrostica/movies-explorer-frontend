@@ -42,7 +42,6 @@ import {
 const App = () => {
   const [moviesData, setMoviesData] = useState([]);
   const [savedMoviesData, setSavedMoviesData] = useState([]);
-  const [lastSearchState, setLastSearchState] = useState([]);
   const [appState, setAppState] = useAppState();
   const [, setUserInfoState] = useUserState();
 
@@ -79,11 +78,12 @@ const App = () => {
     1000,
   );
 
+  // Запрос сохраненных фильмов с nomoreparties
   const getSavedMoviesData = async () => {
     if (savedMoviesData.length === 0) {
       let movies = [];
       const getMovies = async () => {
-        movies = await mainApi.getSavedMovies();
+        movies = (await mainApi.getSavedMovies()).reverse();
         setSavedMoviesData(movies);
       };
       await handleError(getMovies());
@@ -93,6 +93,7 @@ const App = () => {
     return savedMoviesData;
   };
 
+  // Запрос всех фильмов с beat-films
   const getMoviesData = async () => {
     // Загружаем также сохраненные, чтобы корректно включить чекбоксы в /movies
     const savedMovies = await getSavedMoviesData();
@@ -104,7 +105,6 @@ const App = () => {
       };
       await handleError(getMovies());
     }
-
     const preparedMovies = prepareMovies(savedMovies, newMovies, IMAGES_URL);
     setMoviesData(preparedMovies);
 
@@ -159,7 +159,6 @@ const App = () => {
     const { searchResult, ...args } = getSearchState();
     const preparedMovies = prepareMovies(savedMovies, searchResult);
     saveSearchState({ searchResult: preparedMovies, ...args });
-    setLastSearchState(preparedMovies);
   };
 
   const updateMoviesStates = (savedMovies) => {
@@ -169,7 +168,7 @@ const App = () => {
     setSavedMoviesData(savedMovies);
   };
 
-  // Eдаление фильма по роуту /saved-movies
+  // Удаление фильма по роуту /saved-movies
   const handleDeleteMovie = (movie) => {
     return handleError(
       (async () => {
@@ -188,7 +187,7 @@ const App = () => {
       return handleError(
         (async () => {
           const savedMovie = await mainApi.saveMovie(movie);
-          const savedMovies = [...savedMoviesData, savedMovie];
+          const savedMovies = [savedMovie, ...savedMoviesData];
           updateMoviesStates(savedMovies);
         })(),
       );
@@ -235,7 +234,6 @@ const App = () => {
             element={
               <Movies
                 moviesData={moviesData}
-                lastSearchState={lastSearchState}
                 shortFilmDuration={SHORT_FILM_DURATION}
                 getMoviesData={getMoviesData}
                 onCardControlClick={handleMovieOperate}
@@ -247,8 +245,10 @@ const App = () => {
             path="/saved-movies"
             element={
               <SavedMovies
-                savedMovies={savedMoviesData}
-                onDeleteMovie={handleDeleteMovie}
+                moviesData={savedMoviesData}
+                shortFilmDuration={SHORT_FILM_DURATION}
+                getMoviesData={getSavedMoviesData}
+                onCardControlClick={handleDeleteMovie}
               />
             }
           />
