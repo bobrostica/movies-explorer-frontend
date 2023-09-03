@@ -38,8 +38,10 @@ import {
   DESKTOP_MOVIES_COUNT,
   LOCALSTORAGE_SEARCH_STATE_NAME,
 } from '../../utils/constants';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [moviesData, setMoviesData] = useState([]);
   const [savedMoviesData, setSavedMoviesData] = useState([]);
   const [appState, setAppState] = useAppState();
@@ -205,9 +207,11 @@ const App = () => {
         isMenuOpened: false,
         isLoggedIn: true,
       });
+
       setUserInfoState({ ...userInfo });
     };
     await handleError(execAutoLogin());
+    setIsLoading(false);
 
     updateCurrentLayout();
   };
@@ -221,6 +225,16 @@ const App = () => {
       window.removeEventListener('resize', throttledUpdateCurrentLayout);
   }, []);
 
+  // При загрузке страницы, отрисовка происходит раньше, чем приходит ответ на запрос
+  // к серверу getUserInfo. Поэтому наличие кука с jwt не определено, для всех
+  // дочерних компонентов isLoggedIn в appState будет равен undefined. Если,
+  // например, на роуте /movies обновить страницу, то отработает ProtectedRoute
+  // в котором isLoggedId будет undefined и произойдет редирект на "/"
+  // Поэтому здесь, пока не получим ответ, отображается заглушка
+  if (isLoading) {
+    return <main />;
+  }
+
   return (
     <div className="app">
       {appState.isLoggedIn && appState.currentDeviceWidth !== 'desktop' && (
@@ -232,7 +246,8 @@ const App = () => {
           <Route
             path="/movies"
             element={
-              <Movies
+              <ProtectedRoute
+                element={Movies}
                 moviesData={moviesData}
                 shortFilmDuration={SHORT_FILM_DURATION}
                 getMoviesData={getMoviesData}
@@ -244,7 +259,8 @@ const App = () => {
           <Route
             path="/saved-movies"
             element={
-              <SavedMovies
+              <ProtectedRoute
+                element={SavedMovies}
                 moviesData={savedMoviesData}
                 shortFilmDuration={SHORT_FILM_DURATION}
                 getMoviesData={getSavedMoviesData}
@@ -255,7 +271,8 @@ const App = () => {
           <Route
             path="/profile"
             element={
-              <Profile
+              <ProtectedRoute
+                element={Profile}
                 onUserUpdate={handleUserUpdate}
                 onLogout={handleLogout}
               />
@@ -267,7 +284,7 @@ const App = () => {
           path="/signup"
           element={<Register onRegister={handleRegister} />}
         />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<ProtectedRoute element={NotFound} />} />
       </Routes>
 
       <Routes>
