@@ -104,6 +104,7 @@ const Profile = ({ onUserUpdate, onLogout }) => {
             containerClass="profile__input-field"
             labelClass="profile__label"
             inputClass="profile__input"
+            errorClass="profile__validation-error"
           />
         </fieldset>
 
