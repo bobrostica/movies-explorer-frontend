@@ -4,7 +4,7 @@
 
 Фронтнед-часть сервиса movies-explorer
 
-Pull Request: https://github.com/bobrostica/movies-explorer-frontend/pull/2
+Pull Request: [ссылка](https://github.com/bobrostica/movies-explorer-frontend/pull/2)
 
 Страница: https://movie-info.nomoreparties.co
 
