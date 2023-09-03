@@ -41,6 +41,11 @@ const Profile = ({ onUserUpdate, onLogout }) => {
     setErrorMessage('');
   };
 
+  const updateUser = async (userInfo) => {
+    await onUserUpdate(userInfo, showError);
+    updateBaseState(userInfo);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorMessage('');
@@ -50,8 +55,7 @@ const Profile = ({ onUserUpdate, onLogout }) => {
       name: formValues?.name,
       email: formValues?.email,
     };
-    pendingFunc(onUserUpdate(userInfo, showError));
-    updateBaseState(userInfo);
+    pendingFunc(updateUser(userInfo));
     setIsSubmitComplete(true);
   };
 
