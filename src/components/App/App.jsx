@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
@@ -279,12 +279,27 @@ const App = () => {
             }
           />
         </Route>
-        <Route path="/signin" element={<Login onLogin={handleLogin} />} />
+        <Route
+          path="/signin"
+          element={
+            appState.isLoggedIn ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
+          }
+        />
         <Route
           path="/signup"
-          element={<Register onRegister={handleRegister} />}
+          element={
+            appState.isLoggedIn ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Register onRegister={handleRegister} />
+            )
+          }
         />
-        <Route path="*" element={<ProtectedRoute element={NotFound} />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Routes>
