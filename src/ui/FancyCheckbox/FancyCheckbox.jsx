@@ -8,6 +8,7 @@ const FancyCheckbox = ({
   controlText = 'save',
   checked,
   onClick,
+  disabled,
 }) => {
   const [isChecked, setIsChecked] = useState(checked);
 
@@ -19,6 +20,7 @@ const FancyCheckbox = ({
   return (
     <label className={`fancy-checkbox ${className || ''}`} htmlFor={id}>
       <input
+        disabled={disabled}
         checked={isChecked || false}
         onChange={handleChange}
         id={id}

@@ -59,6 +59,7 @@
 }
 
 .movies-card__control {
+  margin-left: 6px;
   grid-area: control;
 
   justify-self: end;

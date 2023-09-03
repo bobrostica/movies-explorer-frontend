@@ -2,8 +2,14 @@ import React from 'react';
 
 import './CloseButton.css';
 
-const CloseButton = ({ className, controlText = 'close', onClick }) => (
+const CloseButton = ({
+  className,
+  controlText = 'close',
+  onClick,
+  disabled,
+}) => (
   <button
+    disabled={disabled}
     className={`close-button ${className || ''}`}
     type="button"
     aria-label={controlText}

@@ -3,10 +3,12 @@ import React from 'react';
 import './MoviesCard.css';
 import createComponentByType from '../../utils/ComponentFactory';
 import { getPrettyDuration } from '../../utils/utils';
+import usePending from '../../hooks/usePending';
 
 const MoviesCard = ({ movie, isSaved, controlConfig, onControlClick }) => {
   const { movieId, nameRU, image, trailerLink, duration } = movie;
   const { controlType, controlText } = controlConfig;
+  const { isPending, pendingFunc } = usePending();
 
   const InputComponent = createComponentByType(controlType);
 
@@ -15,7 +17,7 @@ const MoviesCard = ({ movie, isSaved, controlConfig, onControlClick }) => {
   }
 
   const handleControlClick = (result) => {
-    onControlClick(movie, result);
+    pendingFunc(onControlClick(movie, result));
   };
 
   return (
@@ -49,6 +51,7 @@ const MoviesCard = ({ movie, isSaved, controlConfig, onControlClick }) => {
           }`}
         >
           <InputComponent
+            disabled={isPending}
             checked={isSaved}
             onClick={handleControlClick}
             id={`movie-input-${movieId}`}
