@@ -5,7 +5,7 @@ import FormTitle from '../FormTitle/FormTitle';
 import './AuthForm.css';
 import Logo from '../Logo/Logo';
 import SubmitButton from '../SubmitButton/SubmitButton';
-import ErrorTextField from '../ErrorTextField/ErrorTextField';
+import MessageTextField from '../ErrorTextField/MessageTextField';
 
 const AuthForm = ({
   isFormValid,
@@ -45,9 +45,9 @@ const AuthForm = ({
       >
         <fieldset className="auth-form__fieldset">{children}</fieldset>
         {errorMessage && (
-          <ErrorTextField className="auth-form__submit-error">
+          <MessageTextField className="auth-form__submit-error">
             {errorMessage}
-          </ErrorTextField>
+          </MessageTextField>
         )}
         <SubmitButton
           className="auth-form__submit-button"

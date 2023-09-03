@@ -4,7 +4,7 @@ import './Profile.css';
 import FormTitle from '../../ui/FormTitle/FormTitle';
 import FormInput from '../../ui/FormInput/FormInput';
 import SubmitButton from '../../ui/SubmitButton/SubmitButton';
-import ErrorTextField from '../../ui/ErrorTextField/ErrorTextField';
+import MessageTextField from '../../ui/ErrorTextField/MessageTextField';
 import { useUserState } from '../../contexts/UserStateContext';
 
 import useFormValidation from '../../hooks/useFormValidation';
@@ -15,6 +15,7 @@ const Profile = ({ onUserUpdate, onLogout }) => {
   const [{ name, email }] = useUserState();
   const [isWantToEdit, setIsWantToEdit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const { isStateChanged, updateBaseState, compareState } = useCompareState({
     name,
@@ -31,6 +32,7 @@ const Profile = ({ onUserUpdate, onLogout }) => {
 
   const showError = (message) => {
     setErrorMessage(message);
+    setSuccessMessage('');
   };
 
   const handleEditClick = () => {
@@ -41,16 +43,14 @@ const Profile = ({ onUserUpdate, onLogout }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorMessage('');
-    pendingFunc(
-      onUserUpdate(
-        {
-          name: formValues?.name,
-          email: formValues?.email,
-        },
-        showError,
-      ),
-    );
-    updateBaseState({ name, email });
+    setSuccessMessage('Данные успешно обновлены');
+
+    const userInfo = {
+      name: formValues?.name,
+      email: formValues?.email,
+    };
+    pendingFunc(onUserUpdate(userInfo, showError));
+    updateBaseState(userInfo);
   };
 
   const handleLogout = () => {
@@ -59,6 +59,7 @@ const Profile = ({ onUserUpdate, onLogout }) => {
 
   useEffect(() => {
     compareState(formValues);
+    setSuccessMessage('');
   }, [formValues]);
 
   return (
@@ -107,9 +108,17 @@ const Profile = ({ onUserUpdate, onLogout }) => {
         </fieldset>
 
         {errorMessage && (
-          <ErrorTextField className="profile__error" scheme="profile">
+          <MessageTextField className="profile__message" scheme="profile-error">
             {errorMessage}
-          </ErrorTextField>
+          </MessageTextField>
+        )}
+        {successMessage && (
+          <MessageTextField
+            className="profile__message"
+            scheme="profile-success"
+          >
+            {successMessage}
+          </MessageTextField>
         )}
         {isWantToEdit ? (
           <SubmitButton

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './FormInput.css';
-import ErrorTextField from '../ErrorTextField/ErrorTextField';
+import MessageTextField from '../ErrorTextField/MessageTextField';
 
 const FormInput = ({
   disabled,
@@ -38,7 +38,7 @@ const FormInput = ({
       maxLength={maxlength}
       onChange={onChange}
     />
-    <ErrorTextField className={errorClass}>{errorMessage}</ErrorTextField>
+    <MessageTextField className={errorClass}>{errorMessage}</MessageTextField>
   </label>
 );
 

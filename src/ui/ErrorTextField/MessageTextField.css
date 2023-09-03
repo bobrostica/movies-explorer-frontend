@@ -1,0 +1,15 @@
+.message-text-field {
+  color: #ee3465;
+  font-size: 10px;
+  line-height: normal;
+}
+
+.message-text-field_scheme_profile-error {
+  color: #ff004c;
+  font-size: 11px;
+}
+
+.message-text-field_scheme_profile-success {
+  color: #06ac01;
+  font-size: 11px;
+}
