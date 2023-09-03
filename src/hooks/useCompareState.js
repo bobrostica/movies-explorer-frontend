@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { isDeepEqual } from '../utils/utils';
+import { compareIsDeepEqual } from '../utils/utils';
 
 const useCompareState = (base) => {
   const [baseState, setBaseState] = useState(base);
   const [isStateChanged, setIsStateChanged] = useState(false);
 
   const compareState = (newState) => {
-    setIsStateChanged(!isDeepEqual(baseState, newState));
+    setIsStateChanged(!compareIsDeepEqual(baseState, newState));
   };
 
   const updateBaseState = (newBase) => {

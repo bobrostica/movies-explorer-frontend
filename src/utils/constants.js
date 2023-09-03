@@ -2,6 +2,10 @@ export const GITHUB_LINK = 'https://github.com/sergasent';
 
 export const SHORT_FILM_DURATION = 40;
 
+export const DESKTOP_DEVICE_NAME = 'desktop';
+export const TABLET_DEVICE_NAME = 'tablet';
+export const MOBILE_DEVICE_NAME = 'mobile';
+
 export const TABLET_WIDTH = 768;
 export const MOBILE_WIDTH = 580;
 

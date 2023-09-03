@@ -115,7 +115,7 @@ export const handleResponse = async (response) => {
 };
 
 // Глубокое сравнение двух объектов
-export const isDeepEqual = (object1, object2) => {
+export const compareIsDeepEqual = (object1, object2) => {
   const isObject = (object) => object != null && typeof object === 'object';
 
   const keys1 = Object.keys(object1);
@@ -130,7 +130,7 @@ export const isDeepEqual = (object1, object2) => {
     const val2 = object2[key];
     const areBothObjects = isObject(val1) && isObject(val2);
     if (
-      (areBothObjects && !isDeepEqual(val1, val2)) ||
+      (areBothObjects && !compareIsDeepEqual(val1, val2)) ||
       (!areBothObjects && val1 !== val2)
     ) {
       return false;

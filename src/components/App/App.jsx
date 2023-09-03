@@ -37,6 +37,9 @@ import {
   TABLET_MOVIES_COUNT,
   DESKTOP_MOVIES_COUNT,
   LOCALSTORAGE_SEARCH_STATE_NAME,
+  MOBILE_DEVICE_NAME,
+  TABLET_DEVICE_NAME,
+  DESKTOP_DEVICE_NAME,
 } from '../../utils/constants';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
@@ -49,11 +52,12 @@ const App = () => {
 
   const navigate = useNavigate();
 
+  // Контроль за шириной вьюпорта
   const updateCurrentLayout = () => {
     if (window.innerWidth <= MOBILE_WIDTH) {
       setAppState((prev) => ({
         ...prev,
-        currentDeviceWidth: 'mobile',
+        currentDeviceWidth: MOBILE_DEVICE_NAME,
         visibleMoviesCountBase: MOBILE_MOVIES_COUNT,
       }));
       return;
@@ -62,7 +66,7 @@ const App = () => {
     if (window.innerWidth <= TABLET_WIDTH) {
       setAppState((prev) => ({
         ...prev,
-        currentDeviceWidth: 'tablet',
+        currentDeviceWidth: TABLET_DEVICE_NAME,
         visibleMoviesCountBase: TABLET_MOVIES_COUNT,
       }));
       return;
@@ -70,12 +74,13 @@ const App = () => {
 
     setAppState((prev) => ({
       ...prev,
-      currentDeviceWidth: 'desktop',
+      currentDeviceWidth: DESKTOP_DEVICE_NAME,
       visibleMoviesCountBase: DESKTOP_MOVIES_COUNT,
     }));
   };
 
-  const throttledUpdateCurrentLayout = throttleThisFunc(
+  // Добавление задержки для обработчика изменений размеров вьюпорта
+  const updateCurrentLayoutThrottled = throttleThisFunc(
     updateCurrentLayout,
     1000,
   );
@@ -113,12 +118,14 @@ const App = () => {
     return preparedMovies;
   };
 
+  // Подготовка стейт-переменных после логина
   const preparePage = (userInfo) => {
     setUserInfoState({ ...userInfo });
     setAppState((prev) => ({ ...prev, isLoggedIn: true }));
     navigate('/movies', { replace: true });
   };
 
+  // Обработчик логина
   const handleLogin = (data, showMessage) => {
     const signin = async () => {
       const userInfo = await login(data);
@@ -127,6 +134,7 @@ const App = () => {
     handleError(signin(), showMessage);
   };
 
+  // Обработчик регистрации
   const handleRegister = (data, showMessage) => {
     const { email, password } = data;
     const authorize = async () => {
@@ -136,6 +144,7 @@ const App = () => {
     return handleError(authorize(), showMessage);
   };
 
+  // Обработчик выхода
   const handleLogout = (showMessage) => {
     const signOut = async () => {
       await logout();
@@ -149,6 +158,7 @@ const App = () => {
     handleError(signOut(), showMessage);
   };
 
+  // Обработчик запроса на обновление данных пользователя
   const handleUserUpdate = (data, showMessage) => {
     const userUpdate = async () => {
       const userInfo = await mainApi.updateUser(data);
@@ -157,12 +167,14 @@ const App = () => {
     handleError(userUpdate(), showMessage);
   };
 
+  // Обновление фильмов в сторе, в соответствии с текущими сохраненными фильмами
   const updateLocalStoredMovies = (savedMovies) => {
     const { searchResult, ...args } = getSearchState();
     const preparedMovies = prepareMovies(savedMovies, searchResult);
     saveSearchState({ searchResult: preparedMovies, ...args });
   };
 
+  // Обновление информации о фильмах, в соответствии с текущими сохраненными
   const updateMoviesStates = (savedMovies) => {
     const preparedMovies = prepareMovies(savedMovies, moviesData);
     updateLocalStoredMovies(savedMovies);
@@ -198,7 +210,8 @@ const App = () => {
     return handleDeleteMovie(movie);
   };
 
-  const initialPageLoad = async () => {
+  // Первоначальная загрузка стейтов приложения
+  const loadInitialStates = async () => {
     const execAutoLogin = async () => {
       const userInfo = await mainApi.getUserInfo();
 
@@ -217,12 +230,12 @@ const App = () => {
   };
 
   useEffect(() => {
-    initialPageLoad();
+    loadInitialStates();
 
-    window.addEventListener('resize', throttledUpdateCurrentLayout);
+    window.addEventListener('resize', updateCurrentLayoutThrottled);
 
     return () =>
-      window.removeEventListener('resize', throttledUpdateCurrentLayout);
+      window.removeEventListener('resize', updateCurrentLayoutThrottled);
   }, []);
 
   // При загрузке страницы, отрисовка происходит раньше, чем приходит ответ на запрос
@@ -237,9 +250,10 @@ const App = () => {
 
   return (
     <div className="app">
-      {appState.isLoggedIn && appState.currentDeviceWidth !== 'desktop' && (
-        <LoggedNavList />
-      )}
+      {appState.isLoggedIn &&
+        appState.currentDeviceWidth !== DESKTOP_DEVICE_NAME && (
+          <LoggedNavList />
+        )}
       <Routes>
         <Route element={<HeaderLayout />}>
           <Route path="/" element={<Main />} />
