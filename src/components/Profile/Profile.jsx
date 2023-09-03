@@ -16,6 +16,7 @@ const Profile = ({ onUserUpdate, onLogout }) => {
   const [isWantToEdit, setIsWantToEdit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [isSubmitComplete, setIsSubmitComplete] = useState(false);
 
   const { isStateChanged, updateBaseState, compareState } = useCompareState({
     name,
@@ -40,17 +41,22 @@ const Profile = ({ onUserUpdate, onLogout }) => {
     setErrorMessage('');
   };
 
+  const updateUser = async (userInfo) => {
+    await onUserUpdate(userInfo, showError);
+    updateBaseState(userInfo);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorMessage('');
-    setSuccessMessage('Данные успешно обновлены');
+    setIsSubmitComplete(false);
 
     const userInfo = {
       name: formValues?.name,
       email: formValues?.email,
     };
-    pendingFunc(onUserUpdate(userInfo, showError));
-    updateBaseState(userInfo);
+    pendingFunc(updateUser(userInfo));
+    setIsSubmitComplete(true);
   };
 
   const handleLogout = () => {
@@ -61,6 +67,14 @@ const Profile = ({ onUserUpdate, onLogout }) => {
     compareState(formValues);
     setSuccessMessage('');
   }, [formValues]);
+
+  useEffect(() => {
+    if (isSubmitComplete && !errorMessage) {
+      setSuccessMessage('Данные успешно обновлены');
+      return;
+    }
+    setSuccessMessage('');
+  }, [isSubmitComplete, errorMessage]);
 
   return (
     <section className="profile">
