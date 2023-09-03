@@ -26,6 +26,7 @@ import {
   prepareMovies,
   getSearchState,
   saveSearchState,
+  removeSearchState,
 } from '../../utils/utils';
 
 import {
@@ -36,7 +37,6 @@ import {
   MOBILE_MOVIES_COUNT,
   TABLET_MOVIES_COUNT,
   DESKTOP_MOVIES_COUNT,
-  LOCALSTORAGE_SEARCH_STATE_NAME,
   MOBILE_DEVICE_NAME,
   TABLET_DEVICE_NAME,
   DESKTOP_DEVICE_NAME,
@@ -153,7 +153,9 @@ const App = () => {
         ...appState,
         isLoggedIn: false,
       });
-      localStorage.removeItem(LOCALSTORAGE_SEARCH_STATE_NAME);
+      removeSearchState();
+      setMoviesData([]);
+      setSavedMoviesData([]);
     };
     handleError(signOut(), showMessage);
   };
