@@ -114,6 +114,7 @@ const App = () => {
       };
       await handleError(getMovies());
     }
+
     const preparedMovies = prepareMovies(savedMovies, newMovies, IMAGES_URL);
     setMoviesData(preparedMovies);
 
@@ -180,9 +181,11 @@ const App = () => {
 
   // Обновление информации о фильмах, в соответствии с текущими сохраненными
   const updateMoviesStates = (savedMovies) => {
-    const preparedMovies = prepareMovies(savedMovies, moviesData);
+    if (moviesData.length !== 0) {
+      const preparedMovies = prepareMovies(savedMovies, moviesData);
+      setMoviesData(preparedMovies);
+    }
     updateLocalStoredMovies(savedMovies);
-    setMoviesData(preparedMovies);
     setSavedMoviesData(savedMovies);
   };
 
@@ -267,6 +270,7 @@ const App = () => {
               <ProtectedRoute
                 element={Movies}
                 moviesData={moviesData}
+                savedMoviesData={savedMoviesData}
                 shortFilmDuration={SHORT_FILM_DURATION}
                 getMoviesData={getMoviesData}
                 onCardControlClick={handleMovieOperate}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   getSearchState,
   removeSearchState,
@@ -85,7 +85,6 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
 
     const movies = await loadMoviesData();
     filterMovies(movies, searchStr, isShortFilmChecked);
-    // await refreshMovieStates();
   };
 
   // Обработчик переключателя
@@ -110,7 +109,6 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     if (moviesData.length === 0) {
       setMoviesData(searchRes);
     }
-
     setSearchString(searchStr);
     setFilteredMovies(searchRes);
     setIsShortFilmChecked(isShort);
@@ -119,15 +117,16 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
   // Показ короткометражек
   const filterShortFilm = () => {
     if (searchString && moviesData.length > 0) {
-      // Обновляем содержимове moviesData
-      // loadMoviesData();
       setErrorMessage('');
       refreshMovieStates();
-      // handleError(() =>
-      //   filterMovies(moviesData, searchString, isShortFilmChecked),
-      // );
     }
   };
+
+  useEffect(() => {
+    if (searchString) {
+      filterMovies(moviesData, searchString, isShortFilmChecked);
+    }
+  }, [moviesData]);
 
   return {
     handleSearchSubmit,
@@ -135,7 +134,6 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     loadSearchState,
     filterShortFilm,
     setMoviesData,
-    refreshMovieStates,
     isLoading,
     errorMessage,
     searchString,

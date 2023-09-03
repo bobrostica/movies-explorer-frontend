@@ -11,6 +11,7 @@ const Movies = ({
   shortFilmDuration,
   getMoviesData,
   onCardControlClick,
+  savedMoviesData,
   loadSavedMovies,
 }) => {
   const {
@@ -18,6 +19,7 @@ const Movies = ({
     handleShortFilmChecked,
     loadSearchState,
     filterShortFilm,
+    setMoviesData,
     isLoading,
     errorMessage,
     searchString,
@@ -26,15 +28,22 @@ const Movies = ({
   } = useMovies({ shortFilmDuration, getMoviesData });
 
   useEffect(() => {
-    // Если загружаемся впервые, получаем сохраненные фильмы
+    if (moviesData.length > 0) {
+      setMoviesData(moviesData);
+    }
+
     if (moviesData.length === 0) {
-      loadSavedMovies();
       loadSearchState();
     }
-  }, [moviesData]);
+  }, [moviesData, savedMoviesData]);
 
   useEffect(filterShortFilm, [isShortFilmChecked]);
-  useEffect(loadSearchState, []);
+
+  useEffect(() => {
+    loadSearchState();
+    // Загрузка сохраненных фильмов, для корректной обработки загруженных из localStorage
+    loadSavedMovies();
+  }, []);
 
   return (
     <>
