@@ -47,6 +47,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [moviesData, setMoviesData] = useState([]);
   const [savedMoviesData, setSavedMoviesData] = useState([]);
+  const [isSavedMoviesFetched, setIsSavedMoviesFetched] = useState(false);
   const [appState, setAppState] = useAppState();
   const [, setUserInfoState] = useUserState();
 
@@ -87,13 +88,14 @@ const App = () => {
 
   // Запрос сохраненных фильмов с nomoreparties
   const getSavedMoviesData = async () => {
-    if (savedMoviesData.length === 0) {
+    if (!isSavedMoviesFetched) {
       let movies = [];
       const getMovies = async () => {
         movies = (await mainApi.getSavedMovies()).reverse();
         setSavedMoviesData(movies);
       };
       await handleError(getMovies());
+      setIsSavedMoviesFetched(true);
       return movies;
     }
 
