@@ -193,28 +193,32 @@ const App = () => {
   };
 
   // Удаление фильма по роуту /saved-movies
-  const handleDeleteMovie = (movie) => {
-    return handleError(
-      (async () => {
-        await mainApi.deleteMovie(movie._id);
-        const savedMovies = savedMoviesData.filter(
-          (savedMovie) => savedMovie._id !== movie._id,
-        );
-        updateMoviesStates(savedMovies);
-      })(),
-    );
+  const handleDeleteMovie = async (movie) => {
+    try {
+      await mainApi.deleteMovie(movie._id);
+      const savedMovies = savedMoviesData.filter(
+        (savedMovie) => savedMovie._id !== movie._id,
+      );
+      updateMoviesStates(savedMovies);
+      return { isSuccess: true };
+    } catch (err) {
+      console.log(err.message);
+      return { isSuccess: false };
+    }
   };
 
   // Сохранение/удаление фильма по роуту /movies
-  const handleMovieOperate = (movie, isSaving) => {
+  const handleMovieOperate = async (movie, isSaving) => {
     if (isSaving) {
-      return handleError(
-        (async () => {
-          const savedMovie = await mainApi.saveMovie(movie);
-          const savedMovies = [savedMovie, ...savedMoviesData];
-          updateMoviesStates(savedMovies);
-        })(),
-      );
+      try {
+        const savedMovie = await mainApi.saveMovie(movie);
+        const savedMovies = [savedMovie, ...savedMoviesData];
+        updateMoviesStates(savedMovies);
+        return { isSuccess: true };
+      } catch (err) {
+        console.log(err.message);
+        return { isSuccess: false };
+      }
     }
 
     return handleDeleteMovie(movie);

@@ -12,9 +12,12 @@ const FancyCheckbox = ({
 }) => {
   const [isChecked, setIsChecked] = useState(checked);
 
-  const handleChange = (e) => {
-    setIsChecked(e.target.checked);
-    onClick(e.target.checked);
+  const handleChange = async (e) => {
+    e.preventDefault();
+    const { isSuccess } = await onClick(e.target.checked);
+    if (isSuccess) {
+      setIsChecked(!e.target.checked);
+    }
   };
 
   return (
