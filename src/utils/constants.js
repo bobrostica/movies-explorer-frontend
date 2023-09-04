@@ -20,6 +20,10 @@ export const IMAGES_URL = 'https://api.nomoreparties.co/';
 export const BASE_URL = 'http://localhost:3001/';
 
 export const DEFAULT_ERROR_MESSAGE = 'Что-то пошло не так...';
+export const SEARCH_ERROR_MESSAGE =
+  'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.';
+export const SEARCH_NOT_FOUND_MESSAGE = 'Ничего не найдено';
+export const EMPTY_STRING_ERROR_MESSAGE = 'Нужно ввести ключевое слово';
 export const UPDATE_PROFILE_SUCCESS_MESSAGE = 'Сохранение успешно выполненно';
 
 export const LOCALSTORAGE_SEARCH_STATE_NAME = 'lastSearch';

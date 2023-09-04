@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import { getMoviesByNameContains } from '../utils/utils';
+import { SEARCH_ERROR_MESSAGE } from '../utils/constants';
 
 const useSavedMovies = ({ shortFilmDuration, getMoviesData }) => {
   const [moviesData, setMoviesData] = useState([]);
@@ -10,19 +11,9 @@ const useSavedMovies = ({ shortFilmDuration, getMoviesData }) => {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
 
+  // Фильтр короткометражек
   const getShortMovies = (moviesList, maxDuration) => {
     return moviesList?.filter(({ duration }) => duration <= maxDuration);
-  };
-
-  // Обработчик ошибок
-  const handleError = async (func) => {
-    try {
-      await func();
-    } catch (err) {
-      setErrorMessage(
-        'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.',
-      );
-    }
   };
 
   // Отправляем массив на фильтрацию, сохраняем результат
@@ -54,14 +45,16 @@ const useSavedMovies = ({ shortFilmDuration, getMoviesData }) => {
   };
 
   const refreshMovieStates = () => {
-    handleError(() => {
+    try {
       setErrorMessage('');
       filterMovies({
         movies: moviesData,
         searchStr: searchString,
         isShort: isShortFilmChecked,
       });
-    });
+    } catch (err) {
+      setErrorMessage(SEARCH_ERROR_MESSAGE);
+    }
   };
 
   const initialLoad = () => {
@@ -103,7 +96,6 @@ const useSavedMovies = ({ shortFilmDuration, getMoviesData }) => {
     handleSearchSubmit,
     handleShortFilmChecked,
     setMoviesData,
-    refreshMovieStates,
     initialLoad,
     isLoading,
     errorMessage,

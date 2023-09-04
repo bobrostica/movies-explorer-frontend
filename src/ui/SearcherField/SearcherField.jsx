@@ -8,6 +8,7 @@ const SearcherField = ({
   onSubmit,
   placeholder = '',
   initialValue = '',
+  isPending,
 }) => {
   const inputRef = useRef();
 
@@ -29,7 +30,11 @@ const SearcherField = ({
         placeholder={placeholder}
         required
       />
-      <SearchButton onClick={handleSubmit} className="searcher-field__button" />
+      <SearchButton
+        isPending={isPending}
+        onClick={handleSubmit}
+        className="searcher-field__button"
+      />
     </fieldset>
   );
 };

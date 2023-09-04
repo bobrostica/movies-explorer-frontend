@@ -5,6 +5,11 @@ import {
   saveSearchState,
   getMoviesByNameContains,
 } from '../utils/utils';
+import {
+  EMPTY_STRING_ERROR_MESSAGE,
+  SEARCH_ERROR_MESSAGE,
+  SEARCH_NOT_FOUND_MESSAGE,
+} from '../utils/constants';
 
 const useMovies = ({ shortFilmDuration, getMoviesData }) => {
   const [moviesData, setMoviesData] = useState([]);
@@ -13,18 +18,6 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
   const [searchString, setSearchString] = useState('');
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
-
-  // Обработчик ошибок
-  const handleError = async (func) => {
-    try {
-      await func();
-    } catch (err) {
-      setErrorMessage(
-        'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.',
-      );
-      removeSearchState();
-    }
-  };
 
   // Отфильтрованный массив сохраняем в localStorage и в state
   const filterMovies = (movies, searchStr, isShort) => {
@@ -36,7 +29,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     );
 
     if (searchResult.length === 0) {
-      setErrorMessage('Ничего не найдено');
+      setErrorMessage(SEARCH_NOT_FOUND_MESSAGE);
       removeSearchState();
       return;
     }
@@ -62,11 +55,15 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     return movies;
   };
 
-  const refreshMovieStates = () => {
-    handleError(async () => {
+  // Обновление данных о фильмах и применение текущего фильтра
+  const refreshMovieStates = async () => {
+    try {
       const movies = await loadMoviesData();
       filterMovies(movies, searchString, isShortFilmChecked);
-    });
+    } catch (err) {
+      setErrorMessage(SEARCH_ERROR_MESSAGE);
+      removeSearchState();
+    }
   };
 
   // Обработчик кнопки поиска
@@ -74,7 +71,7 @@ const useMovies = ({ shortFilmDuration, getMoviesData }) => {
     setSearchString(searchStr);
 
     if (!searchStr) {
-      setErrorMessage('Нужно ввести ключевое слово');
+      setErrorMessage(EMPTY_STRING_ERROR_MESSAGE);
       removeSearchState();
       return;
     }

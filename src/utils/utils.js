@@ -86,18 +86,6 @@ export const prepareMovies = (
   });
 };
 
-// Общий обработчик ошибок для промисов
-export const handleError = (promise, pushErrorMessage) => {
-  return promise.catch((err) => {
-    if (pushErrorMessage) {
-      pushErrorMessage(err.message);
-      return;
-    }
-
-    console.log(err);
-  });
-};
-
 // Обработчик ответа от сервера
 export const handleResponse = async (response) => {
   let resData = null;

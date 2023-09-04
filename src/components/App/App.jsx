@@ -22,7 +22,6 @@ import { useUserState } from '../../contexts/UserStateContext';
 
 import {
   throttleThisFunc,
-  handleError,
   prepareMovies,
   getSearchState,
   saveSearchState,
@@ -232,7 +231,7 @@ const App = () => {
 
   // Первоначальная загрузка стейтов приложения
   const loadInitialStates = async () => {
-    const execAutoLogin = async () => {
+    try {
       const userInfo = await mainApi.getUserInfo();
 
       setAppState({
@@ -242,8 +241,9 @@ const App = () => {
       });
 
       setUserInfoState({ ...userInfo });
-    };
-    await handleError(execAutoLogin());
+    } catch (err) {
+      console.log(err.message);
+    }
     setIsLoading(false);
 
     updateCurrentLayout();

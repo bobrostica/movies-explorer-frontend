@@ -17,12 +17,7 @@ const MoviesCard = ({ movie, isSaved, controlConfig, onControlClick }) => {
   }
 
   const handleControlClick = async (cardFlag) => {
-    let response = null;
-    const controlClick = async () => {
-      response = await onControlClick(movie, cardFlag);
-    };
-    await pendingFunc(controlClick());
-    return response;
+    return pendingFunc(onControlClick(movie, cardFlag));
   };
 
   return (
