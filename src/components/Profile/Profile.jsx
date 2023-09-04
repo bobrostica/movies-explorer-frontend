@@ -59,15 +59,12 @@ const Profile = ({ onUserUpdate, onLogout }) => {
     pendingFunc(updateUser(userInfo));
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setErrorMessage('');
-    const logout = async () => {
-      const { message } = onLogout();
-      if (message) {
-        setErrorMessage(message);
-      }
-    };
-    pendingFunc(logout());
+    const response = await pendingFunc(onLogout());
+    if (response) {
+      setErrorMessage(response.message);
+    }
   };
 
   useEffect(() => {
