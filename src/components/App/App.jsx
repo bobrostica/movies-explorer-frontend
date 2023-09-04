@@ -89,14 +89,15 @@ const App = () => {
   // Запрос сохраненных фильмов с nomoreparties
   const getSavedMoviesData = async () => {
     if (!isSavedMoviesFetched) {
-      let movies = [];
-      const getMovies = async () => {
-        movies = (await mainApi.getSavedMovies()).reverse();
+      try {
+        const movies = (await mainApi.getSavedMovies()).reverse();
         setSavedMoviesData(movies);
-      };
-      await handleError(getMovies());
-      setIsSavedMoviesFetched(true);
-      return movies;
+        setIsSavedMoviesFetched(true);
+        return movies;
+      } catch (err) {
+        console.log(err.message);
+        return [];
+      }
     }
 
     return savedMoviesData;
@@ -109,10 +110,11 @@ const App = () => {
     let newMovies = moviesData;
 
     if (newMovies.length === 0) {
-      const getMovies = async () => {
+      try {
         newMovies = await moviesApi.getMovies();
-      };
-      await handleError(getMovies());
+      } catch (err) {
+        console.log(err.message);
+      }
     }
 
     const preparedMovies = prepareMovies(savedMovies, newMovies, IMAGES_URL);
