@@ -11,12 +11,13 @@ import useFormValidation from '../../hooks/useFormValidation';
 import usePending from '../../hooks/usePending';
 import useCompareState from '../../hooks/useCompareState';
 
+import { UPDATE_PROFILE_SUCCESS_MESSAGE } from '../../utils/constants';
+
 const Profile = ({ onUserUpdate, onLogout }) => {
   const [{ name, email }] = useUserState();
   const [isWantToEdit, setIsWantToEdit] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [isSubmitComplete, setIsSubmitComplete] = useState(false);
 
   const { isStateChanged, updateBaseState, compareState } = useCompareState({
     name,
@@ -42,21 +43,25 @@ const Profile = ({ onUserUpdate, onLogout }) => {
   };
 
   const updateUser = async (userInfo) => {
-    await onUserUpdate(userInfo, showError);
-    updateBaseState(userInfo);
+    const { isSuccess, message } = await onUserUpdate(userInfo);
+    if (isSuccess) {
+      setSuccessMessage(UPDATE_PROFILE_SUCCESS_MESSAGE);
+      updateBaseState(userInfo);
+      return;
+    }
+    setErrorMessage(message);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorMessage('');
-    setIsSubmitComplete(false);
 
     const userInfo = {
       name: formValues?.name,
       email: formValues?.email,
     };
+
     pendingFunc(updateUser(userInfo));
-    setIsSubmitComplete(true);
   };
 
   const handleLogout = () => {
@@ -67,14 +72,6 @@ const Profile = ({ onUserUpdate, onLogout }) => {
     compareState(formValues);
     setSuccessMessage('');
   }, [formValues]);
-
-  useEffect(() => {
-    if (isSubmitComplete && !errorMessage) {
-      setSuccessMessage('Данные успешно обновлены');
-      return;
-    }
-    setSuccessMessage('');
-  }, [isSubmitComplete, errorMessage]);
 
   return (
     <section className="profile">

@@ -164,12 +164,14 @@ const App = () => {
   };
 
   // Обработчик запроса на обновление данных пользователя
-  const handleUserUpdate = (data, showMessage) => {
-    const userUpdate = async () => {
+  const handleUserUpdate = async (data) => {
+    try {
       const userInfo = await mainApi.updateUser(data);
       setUserInfoState({ ...userInfo });
-    };
-    handleError(userUpdate(), showMessage);
+      return { isSuccess: true };
+    } catch (err) {
+      return { isSuccess: false, message: err.message };
+    }
   };
 
   // Обновление фильмов в сторе, в соответствии с текущими сохраненными фильмами
