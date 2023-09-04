@@ -131,22 +131,26 @@ const App = () => {
   };
 
   // Обработчик логина
-  const handleLogin = (data, showMessage) => {
-    const signin = async () => {
+  const handleLogin = async (data) => {
+    try {
       const userInfo = await login(data);
       preparePage(userInfo);
-    };
-    handleError(signin(), showMessage);
+    } catch (err) {
+      return { message: err.message };
+    }
   };
 
   // Обработчик регистрации
-  const handleRegister = (data, showMessage) => {
+  const handleRegister = async (data) => {
     const { email, password } = data;
-    const authorize = async () => {
+    try {
       await register(data);
-      return handleLogin({ email, password });
-    };
-    return handleError(authorize(), showMessage);
+      const loginResult = await handleLogin({ email, password });
+      // Если handleLogin вернет сообщение об ошибке, переправим его дальше
+      return loginResult;
+    } catch (err) {
+      return { message: err.message };
+    }
   };
 
   // Обработчик выхода

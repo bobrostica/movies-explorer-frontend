@@ -17,15 +17,12 @@ const Login = ({ onLogin }) => {
       },
     });
 
-  const handleSubmit = async (showMessage) => {
-    pendingFunc(
-      onLogin(
-        {
-          email: formValues?.email,
-          password: formValues?.password,
-        },
-        showMessage,
-      ),
+  const handleSubmit = async () => {
+    return pendingFunc(
+      onLogin({
+        email: formValues?.email,
+        password: formValues?.password,
+      }),
     );
   };
 

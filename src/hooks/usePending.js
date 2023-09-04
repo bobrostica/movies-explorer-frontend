@@ -7,6 +7,7 @@ const usePending = () => {
     setIsPending(true);
     await promise;
     setIsPending(false);
+    return promise;
   };
 
   return { isPending, pendingFunc };

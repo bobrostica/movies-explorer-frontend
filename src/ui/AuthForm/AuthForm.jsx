@@ -21,14 +21,13 @@ const AuthForm = ({
 }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
-  const showError = (message) => {
-    setErrorMessage(message);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
-    onSubmit(showError);
+    const response = await onSubmit();
+    if (response) {
+      setErrorMessage(response.message);
+    }
   };
 
   return (

@@ -17,16 +17,13 @@ const Register = ({ onRegister }) => {
       },
     });
 
-  const handleSubmit = async (showMessage) => {
-    pendingFunc(
-      onRegister(
-        {
-          name: formValues?.name,
-          email: formValues?.email,
-          password: formValues?.password,
-        },
-        showMessage,
-      ),
+  const handleSubmit = async () => {
+    return pendingFunc(
+      onRegister({
+        name: formValues?.name,
+        email: formValues?.email,
+        password: formValues?.password,
+      }),
     );
   };
 
