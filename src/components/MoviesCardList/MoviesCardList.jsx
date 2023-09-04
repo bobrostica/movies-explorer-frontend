@@ -41,10 +41,12 @@ const MoviesCardList = ({
     updateVisibleCardsCount();
   }, [visibleMoviesCountBase, countMultiplier, moviesData]);
 
-  // При поступлении другого массива фильмов, сбросит мультипликатор
+  // При инициализации нового поиска, сбросит мультипликатор
   useEffect(() => {
-    setCountMultiplier(1);
-  }, [moviesData]);
+    if (isLoading) {
+      setCountMultiplier(1);
+    }
+  }, [isLoading]);
 
   return (
     <MainSection
