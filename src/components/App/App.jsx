@@ -148,8 +148,8 @@ const App = () => {
   };
 
   // Обработчик выхода
-  const handleLogout = (showMessage) => {
-    const signOut = async () => {
+  const handleLogout = async () => {
+    try {
       await logout();
       navigate('/', { replace: true });
       setAppState({
@@ -159,8 +159,9 @@ const App = () => {
       removeSearchState();
       setMoviesData([]);
       setSavedMoviesData([]);
-    };
-    handleError(signOut(), showMessage);
+    } catch (err) {
+      return { message: err.message };
+    }
   };
 
   // Обработчик запроса на обновление данных пользователя

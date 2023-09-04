@@ -32,11 +32,6 @@ const Profile = ({ onUserUpdate, onLogout }) => {
       },
     });
 
-  const showError = (message) => {
-    setErrorMessage(message);
-    setSuccessMessage('');
-  };
-
   const handleEditClick = () => {
     setIsWantToEdit(true);
     setErrorMessage('');
@@ -65,7 +60,14 @@ const Profile = ({ onUserUpdate, onLogout }) => {
   };
 
   const handleLogout = () => {
-    onLogout(showError);
+    setErrorMessage('');
+    const logout = async () => {
+      const { message } = onLogout();
+      if (message) {
+        setErrorMessage(message);
+      }
+    };
+    pendingFunc(logout());
   };
 
   useEffect(() => {
