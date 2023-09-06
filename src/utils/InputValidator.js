@@ -1,12 +1,9 @@
+import validator from 'validator';
+
 class InputValidator {
-  inputRules = {
+  static inputRules = {
     email: [
-      (value) =>
-        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(
-          value,
-        )
-          ? null
-          : 'Некорректный email',
+      (value) => (validator.isEmail(value) ? null : 'Некорректный email'),
     ],
   };
 

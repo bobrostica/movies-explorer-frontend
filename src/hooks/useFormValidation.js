@@ -21,7 +21,8 @@ const useFormValidation = ({ isOpen, inputs }) => {
 
     const extraValidationError = InputValidator.getValidationError(name, value);
 
-    if (extraValidationError) {
+    // Добавим в условие приоритет для встроенной валидации
+    if (extraValidationError && !evt.target.validationMessage) {
       setValidState({
         ...validState,
         [name]: extraValidationError,
@@ -44,7 +45,7 @@ const useFormValidation = ({ isOpen, inputs }) => {
     }
   }, [isOpen]);
 
-  return { isFormValid, formValues, validState, handleChange, refreshForm };
+  return { isFormValid, formValues, validState, handleChange };
 };
 
 export default useFormValidation;

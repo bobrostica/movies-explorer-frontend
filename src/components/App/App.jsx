@@ -1,5 +1,9 @@
-import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+
+import moviesApi from '../../utils/MoviesApi';
+import mainApi from '../../utils/MainApi';
+import { login, register, logout } from '../../utils/Auth';
 
 import './App.css';
 import FooterRoutes from '../../routes/FooterRoutes';
@@ -14,60 +18,322 @@ import HeaderLayout from '../HeaderLayout/HeaderLayout';
 import LoggedNavList from '../LoggedNavList/LoggedNavList';
 
 import { useAppState } from '../../contexts/AppStateContext';
+import { useUserState } from '../../contexts/UserStateContext';
 
-import { throttleThisFunc } from '../../utils/utils';
-import { TABLET_WIDTH, MOBILE_WIDTH } from '../../utils/constants';
+import {
+  throttleThisFunc,
+  prepareMovies,
+  getSearchState,
+  saveSearchState,
+  removeSearchState,
+} from '../../utils/utils';
+
+import {
+  TABLET_WIDTH,
+  MOBILE_WIDTH,
+  IMAGES_URL,
+  SHORT_FILM_DURATION,
+  MOBILE_MOVIES_COUNT,
+  TABLET_MOVIES_COUNT,
+  DESKTOP_MOVIES_COUNT,
+  MOBILE_DEVICE_NAME,
+  TABLET_DEVICE_NAME,
+  DESKTOP_DEVICE_NAME,
+} from '../../utils/constants';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [moviesData, setMoviesData] = useState([]);
+  const [savedMoviesData, setSavedMoviesData] = useState([]);
+  const [isSavedMoviesFetched, setIsSavedMoviesFetched] = useState(false);
   const [appState, setAppState] = useAppState();
+  const [, setUserInfoState] = useUserState();
 
+  const navigate = useNavigate();
+
+  // Контроль за шириной вьюпорта
   const updateCurrentLayout = () => {
     if (window.innerWidth <= MOBILE_WIDTH) {
-      setAppState((prev) => ({ ...prev, currentDeviceWidth: 'mobile' }));
+      setAppState((prev) => ({
+        ...prev,
+        currentDeviceWidth: MOBILE_DEVICE_NAME,
+        visibleMoviesCountBase: MOBILE_MOVIES_COUNT,
+      }));
       return;
     }
 
     if (window.innerWidth <= TABLET_WIDTH) {
-      setAppState((prev) => ({ ...prev, currentDeviceWidth: 'tablet' }));
+      setAppState((prev) => ({
+        ...prev,
+        currentDeviceWidth: TABLET_DEVICE_NAME,
+        visibleMoviesCountBase: TABLET_MOVIES_COUNT,
+      }));
       return;
     }
 
-    setAppState((prev) => ({ ...prev, currentDeviceWidth: 'desktop' }));
+    setAppState((prev) => ({
+      ...prev,
+      currentDeviceWidth: DESKTOP_DEVICE_NAME,
+      visibleMoviesCountBase: DESKTOP_MOVIES_COUNT,
+    }));
   };
 
-  const throttledUpdateCurrentLayout = throttleThisFunc(
+  // Добавление задержки для обработчика изменений размеров вьюпорта
+  const updateCurrentLayoutThrottled = throttleThisFunc(
     updateCurrentLayout,
     1000,
   );
 
-  useEffect(() => {
-    setAppState({
-      ...appState,
-      isLoggedIn: true,
-      isMenuOpened: false,
-    });
-    updateCurrentLayout();
+  // Запрос сохраненных фильмов с nomoreparties
+  const getSavedMoviesData = async () => {
+    if (!isSavedMoviesFetched) {
+      try {
+        const movies = (await mainApi.getSavedMovies()).reverse();
+        setSavedMoviesData(movies);
+        setIsSavedMoviesFetched(true);
+        return movies;
+      } catch (err) {
+        console.log(err.message);
+        return [];
+      }
+    }
 
-    window.addEventListener('resize', throttledUpdateCurrentLayout);
+    return savedMoviesData;
+  };
+
+  // Запрос всех фильмов с beat-films
+  const getMoviesData = async () => {
+    // Загружаем также сохраненные, чтобы корректно включить чекбоксы в /movies
+    const savedMovies = await getSavedMoviesData();
+    let newMovies = moviesData;
+
+    if (newMovies.length === 0) {
+      try {
+        newMovies = await moviesApi.getMovies();
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+
+    const preparedMovies = prepareMovies(savedMovies, newMovies, IMAGES_URL);
+    setMoviesData(preparedMovies);
+
+    return preparedMovies;
+  };
+
+  // Подготовка стейт-переменных после логина
+  const preparePage = (userInfo) => {
+    setUserInfoState({ ...userInfo });
+    setAppState((prev) => ({ ...prev, isLoggedIn: true }));
+    navigate('/movies', { replace: true });
+  };
+
+  // Обработчик логина
+  const handleLogin = async (data) => {
+    try {
+      const userInfo = await login(data);
+      preparePage(userInfo);
+    } catch (err) {
+      return { message: err.message };
+    }
+  };
+
+  // Обработчик регистрации
+  const handleRegister = async (data) => {
+    const { email, password } = data;
+    try {
+      await register(data);
+      const loginResult = await handleLogin({ email, password });
+      // Если handleLogin вернет сообщение об ошибке, переправим его дальше
+      return loginResult;
+    } catch (err) {
+      return { message: err.message };
+    }
+  };
+
+  // Обработчик выхода
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/', { replace: true });
+      setAppState({
+        ...appState,
+        isLoggedIn: false,
+      });
+      removeSearchState();
+      setMoviesData([]);
+      setSavedMoviesData([]);
+    } catch (err) {
+      return { message: err.message };
+    }
+  };
+
+  // Обработчик запроса на обновление данных пользователя
+  const handleUserUpdate = async (data) => {
+    try {
+      const userInfo = await mainApi.updateUser(data);
+      setUserInfoState({ ...userInfo });
+      return { isSuccess: true };
+    } catch (err) {
+      return { isSuccess: false, message: err.message };
+    }
+  };
+
+  // Обновление фильмов в сторе, в соответствии с текущими сохраненными фильмами
+  const updateLocalStoredMovies = (savedMovies) => {
+    const { searchResult, ...args } = getSearchState();
+    const preparedMovies = prepareMovies(savedMovies, searchResult);
+    saveSearchState({ searchResult: preparedMovies, ...args });
+  };
+
+  // Обновление информации о фильмах, в соответствии с текущими сохраненными
+  const updateMoviesStates = (savedMovies) => {
+    if (moviesData.length !== 0) {
+      const preparedMovies = prepareMovies(savedMovies, moviesData);
+      setMoviesData(preparedMovies);
+    }
+    updateLocalStoredMovies(savedMovies);
+    setSavedMoviesData(savedMovies);
+  };
+
+  // Удаление фильма по роуту /saved-movies
+  const handleDeleteMovie = async (movie) => {
+    try {
+      await mainApi.deleteMovie(movie._id);
+      const savedMovies = savedMoviesData.filter(
+        (savedMovie) => savedMovie._id !== movie._id,
+      );
+      updateMoviesStates(savedMovies);
+      return { isSuccess: true };
+    } catch (err) {
+      console.log(err.message);
+      return { isSuccess: false };
+    }
+  };
+
+  // Сохранение/удаление фильма по роуту /movies
+  const handleMovieOperate = async (movie, isSaving) => {
+    if (isSaving) {
+      try {
+        const savedMovie = await mainApi.saveMovie(movie);
+        const savedMovies = [savedMovie, ...savedMoviesData];
+        updateMoviesStates(savedMovies);
+        return { isSuccess: true };
+      } catch (err) {
+        console.log(err.message);
+        return { isSuccess: false };
+      }
+    }
+
+    return handleDeleteMovie(movie);
+  };
+
+  // Первоначальная загрузка стейтов приложения
+  const loadInitialStates = async () => {
+    try {
+      const userInfo = await mainApi.getUserInfo();
+
+      setAppState({
+        ...appState,
+        isMenuOpened: false,
+        isLoggedIn: true,
+      });
+
+      setUserInfoState({ ...userInfo });
+    } catch (err) {
+      console.log(err.message);
+    }
+    setIsLoading(false);
+
+    updateCurrentLayout();
+  };
+
+  useEffect(() => {
+    loadInitialStates();
+
+    window.addEventListener('resize', updateCurrentLayoutThrottled);
 
     return () =>
-      window.removeEventListener('resize', throttledUpdateCurrentLayout);
+      window.removeEventListener('resize', updateCurrentLayoutThrottled);
   }, []);
+
+  // При загрузке страницы, отрисовка происходит раньше, чем приходит ответ на запрос
+  // к серверу getUserInfo. Поэтому наличие кука с jwt не определено, для всех
+  // дочерних компонентов isLoggedIn в appState будет равен undefined. Если,
+  // например, на роуте /movies обновить страницу, то отработает ProtectedRoute
+  // в котором isLoggedId будет undefined и произойдет редирект на "/"
+  // Поэтому здесь, пока не получим ответ, отображается заглушка
+  if (isLoading) {
+    return <main />;
+  }
 
   return (
     <div className="app">
-      {appState.isLoggedIn && appState.currentDeviceWidth !== 'desktop' && (
-        <LoggedNavList />
-      )}
+      {appState.isLoggedIn &&
+        appState.currentDeviceWidth !== DESKTOP_DEVICE_NAME && (
+          <LoggedNavList />
+        )}
       <Routes>
         <Route element={<HeaderLayout />}>
           <Route path="/" element={<Main />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/saved-movies" element={<SavedMovies />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/movies"
+            element={
+              <ProtectedRoute
+                element={Movies}
+                moviesData={moviesData}
+                savedMoviesData={savedMoviesData}
+                shortFilmDuration={SHORT_FILM_DURATION}
+                getMoviesData={getMoviesData}
+                onCardControlClick={handleMovieOperate}
+                loadSavedMovies={getSavedMoviesData}
+              />
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
+              <ProtectedRoute
+                element={SavedMovies}
+                moviesData={savedMoviesData}
+                shortFilmDuration={SHORT_FILM_DURATION}
+                getMoviesData={getSavedMoviesData}
+                onCardControlClick={handleDeleteMovie}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                element={Profile}
+                onUserUpdate={handleUserUpdate}
+                onLogout={handleLogout}
+              />
+            }
+          />
         </Route>
-        <Route path="/signin" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
+        <Route
+          path="/signin"
+          element={
+            appState.isLoggedIn ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            appState.isLoggedIn ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Register onRegister={handleRegister} />
+            )
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
 

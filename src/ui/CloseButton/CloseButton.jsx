@@ -2,13 +2,22 @@ import React from 'react';
 
 import './CloseButton.css';
 
-const CloseButton = ({ className, controlText = 'close' }) => (
+const CloseButton = ({
+  className,
+  controlText = 'close',
+  onClick,
+  disabled,
+}) => (
   <button
+    disabled={disabled}
     className={`close-button ${className || ''}`}
     type="button"
     aria-label={controlText}
     title={controlText}
-    onClick={(e) => e.preventDefault()}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick();
+    }}
   >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
       <path

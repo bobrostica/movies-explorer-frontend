@@ -1,7 +1,8 @@
 .profile {
   width: 100%;
   max-width: 410px;
-  padding: 148px 0 70px;
+  padding-top: 78px;
+  min-height: 560px;
   box-sizing: border-box;
   align-self: center;
 
@@ -20,13 +21,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-grow: 1;
 }
 
 .profile__form-fieldset {
   width: 100%;
-  padding: 0 0 204px;
+  padding: 0;
   border: 0;
   box-sizing: border-box;
+  flex-grow: 1;
 
   display: flex;
   flex-direction: column;
@@ -35,19 +38,27 @@
 .profile__input-field {
   width: 100%;
   max-width: 410px;
-  min-height: 47px;
+  padding-top: 17px;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-areas: 'label input' 'error error';
 }
 
 .profile__input-field:not(:last-child) {
   border-bottom: 1px solid #e8e8e8;
 }
 
+.profile__validation-error {
+  min-height: 10px;
+  margin-bottom: 3px;
+
+  grid-area: error;
+}
+
 .profile__label {
   margin-right: 10px;
+
+  grid-area: label;
 
   font-size: 11px;
   font-weight: 500;
@@ -58,6 +69,8 @@
   padding-right: 0;
   border: 0;
 
+  grid-area: input;
+
   flex-grow: 1;
 
   text-align: right;
@@ -66,7 +79,16 @@
   line-height: normal;
 }
 
-.profile__error {
+.profile__input:disabled {
+  background: transparent;
+  color: #000;
+}
+
+.profile__input:focus {
+  border-radius: 5px;
+}
+
+.profile__message {
   margin-bottom: 20px;
 }
 
@@ -97,16 +119,12 @@
 
 @media screen and (max-width: 768px) {
   .profile {
-    padding-top: 111px;
-    padding-bottom: 70px;
+    padding-top: 40px;
+    min-height: 486px;
   }
 
   .profile__title {
     margin-bottom: 79px;
-  }
-
-  .profile__form-fieldset {
-    padding-bottom: 194px;
   }
 }
 
@@ -114,19 +132,11 @@
   .profile {
     min-height: 100vh;
     min-height: 100dvh;
-    padding: 144px 30px 40px;
+    padding: 144px 30px 28px;
   }
 
   .profile__title {
     margin-bottom: 63px;
-  }
-
-  .profile__form {
-    flex-grow: 1;
-  }
-  .profile__form-fieldset {
-    flex-grow: 1;
-    padding-bottom: 30px;
   }
 
   .profile__button {

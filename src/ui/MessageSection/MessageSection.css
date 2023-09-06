@@ -1,0 +1,18 @@
+.message-section {
+  padding: 30px 0;
+}
+
+.message-section__message {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+
+  font-size: 16px;
+  line-height: 1.21;
+}
+
+@media screen and (max-width: 640px) {
+  .message-section__message {
+    font-size: 14px;
+  }
+}
